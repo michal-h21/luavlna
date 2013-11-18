@@ -1,10 +1,13 @@
 \input luatexbase.sty
+
+% Modify pre_linebreak_filter callback so the spaces can be inserted
 \directlua{%                                  
 preventsingle = require "prevent-single" 
 luatexbase.add_to_callback("pre_linebreak_filter", preventsingle.preventsingle,"~")
-
+% Process string and make table of enabled single letters
+% By default, spaces for all single letters are inserted
+% This can be modified with \singlechars macro
 set_singlechars = function(chars)
-  print("Prevent single tex: "..chars)
   local utf_gmatch = unicode.utf8.gmatch
   local chars = chars  or ""
 	local singlechars = {}
@@ -15,8 +18,17 @@ set_singlechars = function(chars)
 end
 }     
 
+% Set letters which are prevented from breaking
 \def\singlechars#1{%
-\directlua{
-set_singlechars("#1")
+\directlua{set_singlechars("#1")}
 }
+
+% Enable inserting of visual marks for debugging
+\def\preventsingledebugon{%
+\directlua{preventsingle.debug(true)}
+}
+
+% Disable inserting of visual marks for dewbugging
+\def\preventsingledebugoff{%
+\directlua{preventsingle.debug(false)}
 }
