@@ -1,12 +1,17 @@
 local M = {}
 local utf_match = unicode.utf8.match
 local utf_char  = unicode.utf8.char
-local match_char = function(x) print("match char: ",x);return utf_match(x,"%a") end
-local match_table = function(x, chars)local chars=chars or {}; print("match table: ",x,chars[x]);return chars[x] end 
+local match_char = function(x) return utf_match(x,"%a") end
+local match_table = function(x, chars)local chars=chars or {}; return chars[x] end 
 local singlechars = nil-- {a=true,i=true,z=true, v=true, u=true, o = true} 
+
+local set_singlechars= function(c)
+	print("Set single chars lua")
+	for k,_ in pairs(c) do print(k) end
+	singlechars = c
+end
 local prevent_single_letter = function (head)                                   
   local singlechars = singlechars 
-	print("Singlechars: ", type(singlechars))
 	local test_fn = singlechars and match_table or match_char
 	local space = true
 	while head do
@@ -19,7 +24,7 @@ local prevent_single_letter = function (head)
 				p.penalty = 10000                                                       
 				-- This is for debugging only, but then you have to                     
 				-- remove the last node.insert_after line:                              
-				 local w = node.new("whatsit","pdf_literal")                          
+				local w = node.new("whatsit","pdf_literal")                          
 				 w.data = "q 1 0 1 RG 1 0 1 rg 0 0 m 0 5 l 2 5 l 2 0 l b Q"           
 				 node.insert_after(head,head,w)                                       
 				 node.insert_after(head,w,p)                                          
@@ -32,6 +37,6 @@ local prevent_single_letter = function (head)
 end               
 
 M.preventsingle = prevent_single_letter
-M.singlechars = singlechars
+M.singlechars = set_singlechars
 return M
 

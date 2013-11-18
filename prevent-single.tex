@@ -4,13 +4,14 @@ preventsingle = require "prevent-single"
 luatexbase.add_to_callback("pre_linebreak_filter", preventsingle.preventsingle,"~")
 
 set_singlechars = function(chars)
+  print("Prevent single tex: "..chars)
   local utf_gmatch = unicode.utf8.gmatch
   local chars = chars  or ""
 	local singlechars = {}
 	for char in utf_gmatch(chars,"(\%a)") do
   	singlechars[char] = true
 	end
-	preventsingle.singlechars = singlechars
+	preventsingle.singlechars(singlechars)
 end
 }     
 
