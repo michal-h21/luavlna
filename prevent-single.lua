@@ -11,15 +11,17 @@ local utf_char  = unicode.utf8.char
 local alpha = string.char(37).."a"
 local match_char = function(x) return utf_match(x,alpha) end
 local match_table = function(x, chars)local chars=chars or {}; return chars[x] end 
-local singlechars = nil-- {a=true,i=true,z=true, v=true, u=true, o = true} 
+local singlechars = {} -- {a=true,i=true,z=true, v=true, u=true, o = true} 
 local debug = false
 local tex4ht = false
 -- Enable processing only for certain letters
 -- must be table in the {char = true, char2=true} form
-local set_singlechars= function(c)
+local set_singlechars= function(lang,c)
   --print("Set single chars lua")
-  --for k,_ in pairs(c) do print(k) end
-  singlechars = c
+  local lang = tonumber(lang)
+  print("language: "..lang)
+  for k,_ in pairs(c) do print(k) end
+  singlechars[lang] = c
 end
 
 local debug_tex4ht = function(head,p)
@@ -57,8 +59,11 @@ local set_tex4ht = function()
 end
 
 local prevent_single_letter = function (head)                                   
-  local singlechars = singlechars --or {} 
-  local test_fn = singlechars and match_table or match_char
+  local singlechars = singlechars  -- or {} 
+  -- match_char matches all single letters, but this method is abbandoned
+  -- in favor of using table with enabled letters. With this method, multiple
+  -- languages are supported
+  local test_fn = match_table -- singlechars and match_table or match_char
   local space = true
   while head do
     local id = head.id 
@@ -66,8 +71,17 @@ local prevent_single_letter = function (head)
       space=true
     elseif space==true and id == 37 and utf_match(utf_char(head.char), alpha) then -- a letter 
       local lang = head.lang
-      --local s = singlechars.lang
-      if test_fn(utf_char(head.char), singlechars) and head.next.id == 10 then    -- only if we are at a one letter word
+      local s = singlechars[lang] or {} -- load singlechars for node's lang
+      for k, n in pairs(singlechars) do
+        for c,_ in pairs(n) do
+        --print(type(k), c)
+      end
+      end
+      local j =singlechars[lang] or "nic"
+      -- print(type(lang), type(j))
+      -- texio.write_nl(lang .."-" )
+      for k,j in pairs(s) do texio.write_nl("znak:" ..k) end
+      if test_fn(utf_char(head.char), s) and head.next.id == 10 then    -- only if we are at a one letter word
         local p = node.new("penalty")                                           
         p.penalty = 10000                                                       
         if debug then
