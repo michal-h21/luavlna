@@ -1,23 +1,32 @@
 \documentclass{ltxdoc}
+%\documentclass{article}
+%\usepackage[utf8]{luainputenc}
 \usepackage{fontspec}
 \setmainfont[Ligatures=TeX]{Linux Libertine O}
-\usepackage[czech]{babel}
+\usepackage[czech,english]{babel}
+%\usepackage[]{polyglossia}
+%\setmainlanguage{english}
+%\setotherlanguage{czech}
 \usepackage{url}
-\usepackage{hyperref}
-\input prevent-single
+%\usepackage{hyperref}
+%\input prevent-single
+\usepackage[]{prevent-single}
+%\input prevent-single
+%\def\preventsingledebugon{}
 \begin{document}
 \title{prevent-single.tex}
 \author{Michal Hoftich}
 \maketitle
 \section{Introduction}
 
-This is small package for plain luatex. In some languages, like
+
+This is small package for plain lua\TeX. In some languages, like
 Czech or Polish, there should be no single letter words at the line
 end, according to the typographical norms. There exists some
 external commands (like \verb!vlna!) or packages (\verb!encxvlna!
 for \verb!enctex!, \verb!xevlna! for Xe\TeX,
 \verb!impnattypo! for lua\LaTeX). This package is for plain
-luatex.
+lua\TeX and for lua\LaTeX.
 
 The code is modified version of Patrick Gundlach's answer on
 TeX.sx%
@@ -33,8 +42,8 @@ The usage is simple:
 \begin{verbatim}
 \input ucode
 \uselanguage{czech}
-% in the case of luacsplain, use instead:
-% \chyph
+\% in the case of luacsplain, use instead:
+\% \chyph
 \input prevent-single
 \preventsingledebugon
 \input luaotfload.sty
@@ -50,15 +59,17 @@ I začátek odstavce je třeba řešit, i když výskyt zalomení není pravděp
 
 Co třeba í znaky š diakritikou?
 
+Různé možnosti [v závorkách \textless a jiných znacích
 \preventsingledebugoff
-Různé možnosti [v závorkách <a jiných znacích
 \bye
 \end{verbatim}
 
-\noindent\parbox{3in}{%
-\preventsingledebugon
+%\noindent\parbox{3in}{%
 
-Příliš žluťoučký kůň úpěl ďábelské ódy. 
+\begin{minipage}{3in}
+\preventsingledebugon
+\selectlanguage{czech}
+Příliš \textit{žluťoučký kůň} úpěl ďábelské ódy. 
 Text s krátkými souhláskami a samohláskami i dalšími jevy z nabídky možností (v textu možnými). 
 
 Grafika, ffinance -- pomlčka a tak.
@@ -67,12 +78,14 @@ I začátek odstavce je třeba řešit, i když výskyt zalomení není pravděp
 
 Co třeba í znaky š diakritikou?
 
-\preventsingledebugoff
-Různé možnosti [v závorkách <a jiných znacích
+Různé možnosti [v závorkách \textless a jiných znacích
 
 \preventsingledebugoff
-}
+\preventsingledebugoff
+%}
+\end{minipage}
 
+\selectlanguage{english}
 \bigskip
 It is also possible to use the package with lua\LaTeX, just use
 
@@ -98,4 +111,5 @@ string of characters, which should be processed only.
 \end{verbatim}
 
 Insert debugging marks on/off. Default off.
+
 \end{document}
