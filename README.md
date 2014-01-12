@@ -1,4 +1,4 @@
-# prevent-single.tex
+# luavlna
 
 This is small package for plain luatex. In some languages, like Czech or Polish, there should be no single letter words at the line end, according to the typographical norms. There exists some external commands (like `vlna`) or packages (`encxvlna` for `enctex`, `xevlna` for `XeTeX`, `impnattypo` for `luaLaTeX`). This package is for plain luatex. 
 
@@ -9,7 +9,7 @@ The usage is simple:
 
     \input ucode
     \uselanguage{czech}
-    \input prevent-single
+    \input luavlna 
     \preventsingledebugon
     \input luaotfload.sty
     \font\hello={name:Linux Libertine O:+rlig;+clig;+liga;+tlig} at 12pt %;+liga;+clig;hlig;+dlig;+trep} at 12pt
