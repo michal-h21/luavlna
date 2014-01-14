@@ -40,16 +40,6 @@ The usage is simple:
     \preventsingledebugoff
     \bye
 
-> Příliš *žluťoučký kůň* úpěl ďábelské ódy. Text s krátkými
-> souhláskami a samohláskami i dalšími jevy z nabídky možností (v
-> textu možnými).
-> 
-> I začátek odstavce je třeba řešit, i když výskyt zalomení není
-> pravděpodobný.
-> 
-> Co třeba í znaky š diakritikou?
-> 
-> Různé možnosti [v závorkách < i jiných znacích
 
 It is also possible to use the package with lua, just use
 
@@ -70,6 +60,8 @@ Default values:
 
     %% only Czech is supported out of the box
     \singlechars{16}{AIiVvOoUuSsZzKk}
+
+## Debugging commands 
 
     \preventsingledebugon
     \preventsingledebugoff
