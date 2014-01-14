@@ -2,7 +2,7 @@
 
 % Modify pre_linebreak_filter callback so the spaces can be inserted
 \directlua{%         
-preventsingle = require "prevent-single" 
+preventsingle = require "luavlna" 
 luatexbase.add_to_callback("pre_linebreak_filter", preventsingle.preventsingle," ")
 % Process string and make table of enabled single letters
 % By default, spaces for all single letters are inserted
