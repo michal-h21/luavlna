@@ -1,40 +1,80 @@
-# luavlna
+# Introduction
 
-This is small package for plain luatex. In some languages, like Czech or Polish, there should be no single letter words at the line end, according to the typographical norms. There exists some external commands (like `vlna`) or packages (`encxvlna` for `enctex`, `xevlna` for `XeTeX`, `impnattypo` for `luaLaTeX`). This package is for plain luatex. 
+This is a small package for plain luaTeX and luaLaTeX. In some languages,
+like Czech or Polish, there should be no single letter words at the
+line end, according to the typographical norms. There exists some
+external commands (like `vlna`) or packages (`encxvlna` for encTeX,
+`xevlna` for XeTeX, `impnattypo` for luaLaTeX).
 
-The code is modified version of Patrick Gundlach's answer on TeX.sx^[http://tex.stackexchange.com/a/28128/2891]. 
-Difference is that it is possible to specify which single letters should be taken into account and the code works also for single letters at the beginning of the brackets. 
+The code is modified version of Patrick Gundlach’s answer on
+TeX.sx[^1]. The difference is that it is possible to specify which
+single letters should be taken into account for different
+languages.
+
+# Usage
 
 The usage is simple:
 
     \input ucode
     \uselanguage{czech}
-    \input luavlna 
+    %% in the case of luacsplain, use instead:
+    %% \chyph
+    %% but language code for Czech is different than in LaTeX or normal 
+    %% luaTeX, so you will need to set single letters with somethinh like:
+    %% \singlechars{5}{AIiVvOoUuSsZzKk}
+    \input luavlna
     \preventsingledebugon
     \input luaotfload.sty
-    \font\hello={name:Linux Libertine O:+rlig;+clig;+liga;+tlig} at 12pt %;+liga;+clig;hlig;+dlig;+trep} at 12pt
+    \font\hello={name:Linux Libertine O:+rlig;+clig;+liga;+tlig} at 12pt 
     \hsize=3in
     \hello
     Příliš žluťoučký kůň úpěl ďábelské ódy. 
-    Text s krátkými souhláskami a samohláskami i dalšími jevy z nabídky možností (v textu možnými). 
-    
-    Grafika, ffinance -- pomlčka a tak.
+    Text s krátkými souhláskami a samohláskami i dalšími jevy 
+    z nabídky možností (v textu možnými). 
     
     I začátek odstavce je třeba řešit, i když výskyt zalomení není pravděpodobný.
     
     Co třeba í znaky š diakritikou?
     
+    Různé možnosti [v závorkách <i jiných znacích
     \preventsingledebugoff
-    Různé možnosti [v závorkách <a jiných znacích
     \bye
 
-## commands
+> Příliš *žluťoučký kůň* úpěl ďábelské ódy. Text s krátkými
+> souhláskami a samohláskami i dalšími jevy z nabídky možností (v
+> textu možnými).
+> 
+> I začátek odstavce je třeba řešit, i když výskyt zalomení není
+> pravděpodobný.
+> 
+> Co třeba í znaky š diakritikou?
+> 
+> Různé možnosti [v závorkách < i jiných znacích
 
-    \singlechars{#1} 
- 
-Enable this feature only for certain letters. By default, all single letters are processed, this command can be used to pass a string of characters, which should be processed only.
+It is also possible to use the package with lua, just use
+
+        \usepackage{luavlna}
+
+in the preamble.
+
+# Commands
+
+    \singlechars{language code}{letters} 
+
+Enable this feature for certain letters. Language code is internall
+ code for the language, it is 0 for English, 16 for Czech.
+Please note that in `csplain`, language code for Czech is 5 and
+you will have to set it yourself.
+
+Default values:
+
+    %% only Czech is supported out of the box
+    \singlechars{16}{AIiVvOoUuSsZzKk}
 
     \preventsingledebugon
     \preventsingledebugoff
 
 Insert debugging marks on/off. Default off.
+
+[^1]:
+    <http://tex.stackexchange.com/a/28128/2891>
