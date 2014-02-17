@@ -1,4 +1,4 @@
-\documentclass{ltxdoc}
+\documentclass[12pt]{ltxdoc}
 %\documentclass{article}
 %\usepackage[utf8]{luainputenc}
 \usepackage{fontspec}
@@ -15,25 +15,25 @@
 %\input prevent-single
 %\def\preventsingledebugon{}
 \begin{document}
-\title{prevent-single.tex}
-\author{Michal Hoftich}
+\title{The \verb|luavlna| package}
+\author{Michal Hoftich (\url{michal.h21@gmail.com})}
 \maketitle
+\tableofcontents
 \section{Introduction}
 
 
-This is small package for plain lua\TeX and Lua\LaTeX. In some languages, like
+This is a small package for plain lua\TeX and lua\LaTeX. In some languages, like
 Czech or Polish, there should be no single letter words at the line
 end, according to the typographical norms. There exists some
 external commands (like \verb!vlna!) or packages (\verb!encxvlna!
-for \verb!enctex!, \verb!xevlna! for Xe\TeX,
+for enc\TeX, \verb!xevlna! for Xe\TeX,
 \verb!impnattypo! for lua\LaTeX). %This package is for plain
-lua\TeX and for lua\LaTeX.
+%lua\TeX and for lua\LaTeX.
 
 The code is modified version of Patrick Gundlach's answer on
-TeX.sx%
-\footnote{\url{http://tex.stackexchange.com/a/28128/2891}}.
-Difference is that it is possible to specify which single letters
-should be taken into account for different languages. 
+TeX.sx\footnote{\url{http://tex.stackexchange.com/a/28128/2891}}.
+The difference is that it is possible to specify which single letters
+should be taken into account for different languages.
 % The code works also for single letters at the beginning of the brackets.
 
 \section{Usage}
@@ -43,45 +43,45 @@ The usage is simple:
 \begin{verbatim}
 \input ucode
 \uselanguage{czech}
-\% in the case of luacsplain, use instead:
-\% \chyph
-\input prevent-single
+%% in the case of luacsplain, use instead:
+%% \chyph
+%% but language code for Czech is different than in LaTeX or normal 
+%% luaTeX, so you will need to set single letters with somethinh like:
+%% \singlechars{5}{AIiVvOoUuSsZzKk}
+\input luavlna
 \preventsingledebugon
 \input luaotfload.sty
 \font\hello={name:Linux Libertine O:+rlig;+clig;+liga;+tlig} at 12pt 
 \hsize=3in
 \hello
 Příliš žluťoučký kůň úpěl ďábelské ódy. 
-Text s krátkými souhláskami a samohláskami i dalšími jevy z nabídky možností (v textu možnými). 
-
-Grafika, ffinance -- pomlčka a tak.
+Text s krátkými souhláskami a samohláskami i dalšími jevy 
+z nabídky možností (v textu možnými). 
 
 I začátek odstavce je třeba řešit, i když výskyt zalomení není pravděpodobný.
 
 Co třeba í znaky š diakritikou?
 
-Různé možnosti [v závorkách \textless a jiných znacích
+Různé možnosti [v závorkách <i jiných znacích
 \preventsingledebugoff
 \bye
 \end{verbatim}
 
 %\noindent\parbox{3in}{%
 
+\noindent
 \begin{minipage}{3in}
 \preventsingledebugon
 \selectlanguage{czech}
 Příliš \textit{žluťoučký kůň} úpěl ďábelské ódy. 
 Text s krátkými souhláskami a samohláskami i dalšími jevy z nabídky možností (v textu možnými). 
 
-Grafika, ffinance -- pomlčka a tak.
-
 I začátek odstavce je třeba řešit, i když výskyt zalomení není pravděpodobný.
 
 Co třeba í znaky š diakritikou?
 
-Různé možnosti [v závorkách \textless a jiných znacích
+Různé možnosti [v závorkách \textless i jiných znacích
 
-\preventsingledebugoff
 \preventsingledebugoff
 %}
 \end{minipage}
@@ -91,7 +91,7 @@ Různé možnosti [v závorkách \textless a jiných znacích
 It is also possible to use the package with lua\LaTeX, just use
 
 \begin{verbatim}
-	\input prevent-single
+	\usepackage{luavlna}
 \end{verbatim}
 
 in the preamble.
@@ -99,13 +99,26 @@ in the preamble.
 \section{Commands}
 
 \begin{verbatim}
-\singlechars{#1} 
+\singlechars{language code}{letters} 
 \end{verbatim}
 
-Enable this feature only for certain letters. By default, all
-single letters are processed, this command can be used to pass a
-string of characters, which should be processed only.
+Enable this feature for certain letters. 
+Language code is internall \TeX\ code for the language, it is $0$ for English, 
+$16$ for Czech. Please note that in \verb|csplain|, language code for Czech 
+is $5$ and you will have to set it yourself.
 
+Default values:
+
+\begin{verbatim}
+	%% only Czech is supported out of the box
+	\singlechars{16}{AIiVvOoUuSsZzKk}
+\end{verbatim}
+
+%By default, all
+%single letters are processed, this command can be used to pass a
+%string of characters, which should be processed only.
+
+\subsection{Debugging commands}
 \begin{verbatim}
 \preventsingledebugon
 \preventsingledebugoff

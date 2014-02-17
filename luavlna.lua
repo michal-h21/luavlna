@@ -20,7 +20,7 @@ local set_singlechars= function(lang,c)
   --print("Set single chars lua")
   local lang = tonumber(lang)
   print("language: "..lang)
-  for k,_ in pairs(c) do print(k) end
+  -- for k,_ in pairs(c) do print(k) end
   singlechars[lang] = c
 end
 
@@ -80,7 +80,7 @@ local prevent_single_letter = function (head)
       local j =singlechars[lang] or "nic"
       -- print(type(lang), type(j))
       -- texio.write_nl(lang .."-" )
-      for k,j in pairs(s) do texio.write_nl("znak:" ..k) end
+      -- for k,j in pairs(s) do texio.write_nl("znak:" ..k) end
       if test_fn(utf_char(head.char), s) and head.next.id == 10 then    -- only if we are at a one letter word
         local p = node.new("penalty")                                           
         p.penalty = 10000                                                       
