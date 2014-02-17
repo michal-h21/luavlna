@@ -1,4 +1,4 @@
--- Module prevent-single
+-- Module luavlna
 -- code originally created by Patrick Gundlach
 -- http://tex.stackexchange.com/q/27780/2891
 -- The code was adapted for plain TeX and added some more features

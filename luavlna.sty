@@ -1,20 +1,5 @@
 \ProvidesPackage{prevent-single}%[2013/12/27 Prevent single letter]
-\RequirePackage{kvoptions}
 
-\input prevent-single
+\input  luavlna
 
-\directlua{
-%local k = require "l-utf8-4ht"
-%luatexbase.add_to_callback("hpack_filter", k.nodes4ht,"@")
-%luatexbase.add_to_callback("pre_linebreak_filter", k.nodes4ht,"@")
-}
-\DeclareDefaultOption{%
-  %\PackageInfo{prevent-single}{%
-  %  Single letters: \CurrentOption
-  %}
-  %\singlechars\CurrentOption
-}
-
-%\ProcessKeyvalOptions*
-%\ProcessLocalKeyvalOptions*
 \endinput

@@ -2,8 +2,8 @@
 
 % Modify pre_linebreak_filter callback so the spaces can be inserted
 \directlua{%         
-preventsingle = require "prevent-single" 
-luatexbase.add_to_callback("pre_linebreak_filter", preventsingle.preventsingle," ")
+luavlna= require "luavlna" 
+luatexbase.add_to_callback("pre_linebreak_filter", luavlna.preventsingle," ")
 % Process string and make table of enabled single letters
 % By default, spaces for all single letters are inserted
 % This can be modified with \singlechars macro
@@ -16,7 +16,7 @@ set_singlechars = function(lang,chars)
   for char in utf_gmatch(chars,"("..alpha..")") do
     singlechars[char] = true
   end
-  preventsingle.singlechars(lang,singlechars)
+  luavlna.singlechars(lang,singlechars)
 end
 }     
 
@@ -27,11 +27,11 @@ end
 
 % Enable inserting of visual marks for debugging
 \def\preventsingledebugon{%
-\directlua{preventsingle.debug(true)}
+\directlua{luavlna.debug(true)}
 }
 
 % Disable inserting of visual marks for dewbugging
 \def\preventsingledebugoff{%
-\directlua{preventsingle.debug(false)}
+\directlua{luavlna.debug(false)}
 }
 \singlechars{16}{AIiVvOoUuSsZzKk}

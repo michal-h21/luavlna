@@ -1,5 +1,5 @@
 \directlua{
-preventsingle.set_tex4ht()
+luavlna.set_tex4ht()
 }
 
 \endinput
