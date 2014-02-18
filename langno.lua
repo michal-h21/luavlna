@@ -1,5 +1,10 @@
 -- langno.lua
-
+-- library for working with luatex's language numbers
+-- glyph nodes have numerical lang field, but the language names for
+-- these numbers aren't saved. 
+--
+-- this library tries to find language names by parsing `language.dat` file
+-- 
 kpse.set_program_name("luatex")
 
 local M = {}
@@ -23,12 +28,12 @@ local load_lang_dat = function()
     -- match comment, equal sign and first word on a line
     local first, language = line:match("%s*([%%%=]?)([%a]*)")
     if first ~="%" then  -- ignore comments
+      langnum[language] = i
       if first ~="=" then -- on lines starting with eq are language synonyms
-        -- print(i, language)
+        print(i, language)
         numlang[i] = language
         i = i + 1
       end
-      langnum[language] = i
     end
   end
   return {numbers = numlang, names = langnum}
@@ -40,6 +45,7 @@ local drivers = {}
 drivers["luatex"]  = load_lang_dat
 drivers["default"] = load_lang_dat
 
+
 local load_languages = function(name)
   local name = name or format or "default"
   local func =  drivers[name] 
@@ -47,14 +53,22 @@ local load_languages = function(name)
   return func()
 end
 
+-- only load_languages function is provided to the outside world
+M.load_languages = load_languages
+return M
+--[[
 
+-- sample usage:
 local t = load_languages()
 for k, v in pairs(t.numbers) do
   print(k,v)
 end
 
-print()
 
+-- this may be used in future, if I find a way how does local language.dat
+-- affect language loading
+-- load local language.dat
 local loc = kpse.var_value('TEXMFLOCAL') .. "tex/generic/config/language.dat"
 local f, msg = io.open(loc, "r")
 f:read("*all")
+--]]
