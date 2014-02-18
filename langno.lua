@@ -30,7 +30,7 @@ local load_lang_dat = function()
     if first ~="%" then  -- ignore comments
       langnum[language] = i
       if first ~="=" then -- on lines starting with eq are language synonyms
-        print(i, language)
+        --print(i, language)
         numlang[i] = language
         i = i + 1
       end
