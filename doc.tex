@@ -99,19 +99,20 @@ in the preamble.
 \section{Commands}
 
 \begin{verbatim}
-\singlechars{language code}{letters} 
+\singlechars{language name}{letters} 
 \end{verbatim}
 
-Enable this feature for certain letters. 
-Language code is internall \TeX\ code for the language, it is $0$ for English, 
-$16$ for Czech. Please note that in \verb|csplain|, language code for Czech 
-is $5$ and you will have to set it yourself.
+Enable this feature for certain letters in given language. 
+%Language code is internall \TeX\ code for the language, it is $0$ for English, 
+%$16$ for Czech. Please note that in \verb|csplain|, language code for Czech 
+%is $5$ and you will have to set it yourself.
 
 Default values:
 
 \begin{verbatim}
-	%% only Czech is supported out of the box
-	\singlechars{16}{AIiVvOoUuSsZzKk}
+	%% only Czech and Slovak are supported out of the box
+	\singlechars{czech}{AIiVvOoUuSsZzKk}
+	\singlechars{slovak}{AIiVvOoUuSsZzKk}
 \end{verbatim}
 
 %By default, all
