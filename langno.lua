@@ -13,6 +13,25 @@ local tex = tex or {}
 
 local format = tex.format or "luatex"
 
+-- languages object
+local lang_obj = function(names, numbers)
+	local obj = {}
+	obj.__index = obj
+	local self = setmetatable({},obj)
+	self.names = names
+	self.numbers = numbers
+	-- get language name by number
+	self.get_name = function(self, number)
+		return self.numbers[number]
+	end
+	-- get language number by name
+	self.get_number = function(self, name)
+		return self.names[name]
+	end
+	return self
+end
+
+
 -- default language loader, language.dat file is parsed
 local load_lang_dat = function()
   -- languages are saved in the file language.dat
@@ -36,7 +55,7 @@ local load_lang_dat = function()
       end
     end
   end
-  return {numbers = numlang, names = langnum}
+  return lang_obj(langnum, numlang)--{numbers = numlang, names = langnum}
 end
 
 -- because different formats may use different ways to load languages
@@ -55,19 +74,23 @@ end
 
 -- only load_languages function is provided to the outside world
 M.load_languages = load_languages
+
 return M
 --[[
 
 -- sample usage:
-local t = load_languages()
-for k, v in pairs(t.numbers) do
+local j = load_languages()
+print(j:get_name(16))
+print(j:get_number("slovak"))
+for k, v in pairs(j.numbers) do
   print(k,v)
 end
-
+--]]
 
 -- this may be used in future, if I find a way how does local language.dat
 -- affect language loading
 -- load local language.dat
+--[[
 local loc = kpse.var_value('TEXMFLOCAL') .. "tex/generic/config/language.dat"
 local f, msg = io.open(loc, "r")
 f:read("*all")
