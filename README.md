@@ -49,17 +49,15 @@ in the preamble.
 
 # Commands
 
-    \singlechars{language code}{letters} 
+    \singlechars{language name}{letters} 
 
-Enable this feature for certain letters. Language code is internall
- code for the language, it is 0 for English, 16 for Czech.
-Please note that in `csplain`, language code for Czech is 5 and
-you will have to set it yourself.
+Enable this feature for certain letters in given language. 
 
 Default values:
 
-    %% only Czech is supported out of the box
-    \singlechars{16}{AIiVvOoUuSsZzKk}
+    %% only Czech and Slovak are supported out of the box
+    \singlechars{czech}{AIiVvOoUuSsZzKk}
+    \singlechars{slovak}{AIiVvOoUuSsZzKk}
 
 ## Debugging commands 
 
