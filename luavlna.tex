@@ -11,8 +11,9 @@ luatexbase.add_to_callback("pre_linebreak_filter", luavlna.preventsingle," ")
 set_singlechars = function(lang,chars)
   local utf_gmatch = unicode.utf8.gmatch
 	local languages = langno.load_languages()
-	local langnumbers = languages.names
-	local langid = langnumbers[lang]
+	% local langnumbers = languages.names
+	local langid = languages:get_number(lang)
+	if not langid then return nil, "Cannot find language number for: "..lang end
   local chars = chars  or ""
   local singlechars = {}
   local percent = string.char(37)
