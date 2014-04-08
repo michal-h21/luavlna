@@ -30,11 +30,15 @@ for enc\TeX, \verb!xevlna! for Xe\TeX,
 \verb!impnattypo! for lua\LaTeX). %This package is for plain
 %lua\TeX and for lua\LaTeX.
 
+Other feature of this package is including of non-breakable space after initials
+, like in personal names. 
+
 The code is modified version of Patrick Gundlach's answer on
 TeX.sx\footnote{\url{http://tex.stackexchange.com/a/28128/2891}}.
 The difference is that it is possible to specify which single letters
 should be taken into account for different languages.
 % The code works also for single letters at the beginning of the brackets.
+
 
 \section{Usage}
 
@@ -120,9 +124,23 @@ Default values:
 	\singlechars{slovak}{AIiVvOoUuSsZzKk}
 \end{verbatim}
 
+
 %By default, all
 %single letters are processed, this command can be used to pass a
 %string of characters, which should be processed only.
+
+\begin{verbatim}
+  \compoundinitials{language name}{compounds}
+\end{verbatim}
+
+Declare compound letters for given language. Second argument should be comma 
+separated list of compound letters, in exact form in which they can appear.
+
+Default values:
+
+\begin{verbatim}
+  \compoundinitials{czech}{Ch}
+\end{verbatim}
 
 \subsection{Debugging commands}
 \begin{verbatim}
