@@ -157,11 +157,9 @@ local prevent_single_letter = function (head)
       -- handle initials
       -- uppercase letter followed by period (code 46)
     elseif init and head.id == 37 and head.char == 46 and nextn.id == 10 then 
-      print ("Iniciála: " ..init_buffer)
       head = insert_space(head)
     elseif head.id == 37 then
       local char = utf_char(head.char)
-      if init then print "Init true" end
       init = is_initial(char, head.lang)
     end                                                                         
     head = head.next                                                            
