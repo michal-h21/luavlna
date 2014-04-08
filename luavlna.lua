@@ -8,9 +8,12 @@
 local M = {}
 local utf_match = unicode.utf8.match
 local utf_char  = unicode.utf8.char
-local alpha = string.char(37).."a"
+local alpha = string.char(37).."a" -- alpha class, entering 
+                                   -- percent char directly caused error
 local match_char = function(x) return utf_match(x,alpha) end
-local match_table = function(x, chars)local chars=chars or {}; return chars[x] end 
+local match_table = function(x, chars)
+	local chars=chars or {}; return chars[x] 
+end 
 local singlechars = {} -- {a=true,i=true,z=true, v=true, u=true, o = true} 
 local debug = false
 local tex4ht = false
