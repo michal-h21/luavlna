@@ -111,8 +111,8 @@ local init_buffer = ""
 local is_initial = function(c, lang)
 	local allowed_initials = initials[lang] or {}
 	init_buffer = init_buffer .. c
-	if is_uppercase(c) then
-		return allowed_initials[init_buffer]
+	if is_uppercase(c) and init_buffer == c then
+		return true --allowed_initials[init_buffer]
 	else
 		local status = allowed_initials[init_buffer]
 		if not status then 
@@ -170,6 +170,7 @@ end
 
 M.preventsingle = prevent_single_letter
 M.singlechars = set_singlechars
+M.initials    = set_initials
 M.set_tex4ht  = set_tex4ht
 M.debug = set_debug
 return M

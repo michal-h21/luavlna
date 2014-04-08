@@ -8,12 +8,12 @@ luatexbase.add_to_callback("pre_linebreak_filter", luavlna.preventsingle," ")
 % Process string and make table of enabled single letters
 % By default, spaces for all single letters are inserted
 % This can be modified with \singlechars macro
+local languages = langno.load_languages()
 set_singlechars = function(lang,chars)
   local utf_gmatch = unicode.utf8.gmatch
-	local languages = langno.load_languages()
-	% local langnumbers = languages.names
-	local langid = languages:get_number(lang)
-	if not langid then return nil, "Cannot find language number for: "..lang end
+  % local langnumbers = languages.names
+  local langid = languages:get_number(lang)
+  if not langid then return nil, "Cannot find language number for: "..lang end
   local chars = chars  or ""
   local singlechars = {}
   local percent = string.char(37)
@@ -23,6 +23,20 @@ set_singlechars = function(lang,chars)
   end
   luavlna.singlechars(langid,singlechars)
 end
+
+% set compound characters for initials handling
+% useful for Czech "Ch" etc.
+% comma separated list of compounds
+set_compounds = function(lang, compounds)
+  local langid = languages:get_number(lang)
+  if not langid then return nil, "Cannot find language number for: "..lang end
+  local c = compounds:explode(",+") % match multiple colons as one
+  local  compoundstable = {}
+  for _, compound in pairs(c) do
+    compoundstable[compound] = true
+  end
+  luavlna.initials(langid, compoundstable)
+end
 }     
 
 % Set letters which are prevented from breaking
@@ -30,6 +44,10 @@ end
 \directlua{set_singlechars("#1","#2")}
 }
 
+% Define compound initials
+\def\compoundinitials#1#2{%
+\directlua{set_compounds("#1","#2")}
+}
 % Enable inserting of visual marks for debugging
 \def\preventsingledebugon{%
 \directlua{luavlna.debug(true)}
@@ -41,3 +59,5 @@ end
 }
 \singlechars{czech}{AIiVvOoUuSsZzKk}
 \singlechars{slovak}{AIiVvOoUuSsZzKk}
+
+\compoundinitials{czech}{Ch}
