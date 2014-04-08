@@ -74,17 +74,16 @@ local prevent_single_letter = function (head)
       space=true
     elseif space==true and id == 37 and utf_match(utf_char(head.char), alpha) then -- a letter 
       local lang = head.lang
+			local char = utf_char(head.char)
       local s = singlechars[lang] or {} -- load singlechars for node's lang
+			--[[
       for k, n in pairs(singlechars) do
         for c,_ in pairs(n) do
         --print(type(k), c)
+        end
       end
-      end
-      local j =singlechars[lang] or "nic"
-      -- print(type(lang), type(j))
-      -- texio.write_nl(lang .."-" )
-      -- for k,j in pairs(s) do texio.write_nl("znak:" ..k) end
-      if test_fn(utf_char(head.char), s) and head.next.id == 10 then    -- only if we are at a one letter word
+			--]]
+      if test_fn(char, s) and head.next.id == 10 then    -- only if we are at a one letter word
         local p = node.new("penalty")                                           
         p.penalty = 10000                                                       
         if debug then
