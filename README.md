@@ -6,6 +6,9 @@ line end, according to the typographical norms. There exists some
 external commands (like `vlna`) or packages (`encxvlna` for encTeX,
 `xevlna` for XeTeX, `impnattypo` for luaLaTeX).
 
+Other feature of this package is including of non-breakable space after initials
+, like in personal names. 
+
 The code is modified version of Patrick Gundlach’s answer on
 TeX.sx[^1]. The difference is that it is possible to specify which
 single letters should be taken into account for different
@@ -37,6 +40,9 @@ The usage is simple:
     Co třeba í znaky š diakritikou?
     
     Různé možnosti [v závorkách <i jiných znacích
+
+    Podpora iniciál: G. F. Hegel, Č. Zíbrt
+
     \preventsingledebugoff
     \bye
 
@@ -58,6 +64,24 @@ Default values:
     %% only Czech and Slovak are supported out of the box
     \singlechars{czech}{AIiVvOoUuSsZzKk}
     \singlechars{slovak}{AIiVvOoUuSsZzKk}
+
+    \compoundinitials{language name}{compounds}
+
+Declare compound letters for given language. Second argument should be comma 
+separated list of compound letters, in exact form in which they can appear.
+
+Default values:
+
+    \compoundinitials{czech}{Ch}
+
+##Turning off language switching
+
+By default, language of the nodes is taken into account. If you want to use
+settings for one language for a whole document, you can use following command:
+
+    	\prevensinglelang{language name}
+
+
 
 ## Debugging commands 
 
