@@ -124,7 +124,7 @@ local is_initial = function(c, lang)
 end
 
 
-local prevent_single_letter = function (head)                                   
+local function prevent_single_letter (head)                                   
   local singlechars = singlechars  -- or {} 
   -- match_char matches all single letters, but this method is abbandoned
   -- in favor of using table with enabled letters. With this method, multiple
@@ -161,6 +161,12 @@ local prevent_single_letter = function (head)
     elseif head.id == 37 then
       local char = utf_char(head.char)
       init = is_initial(char, head.lang)
+		-- hlist support
+		elseif head.id == 0 then
+			prevent_single_letter(head.head)
+		-- vlist support
+		elseif head.id == 1 then
+			prevent_single_letter(head.head)
     end                                                                         
     head = head.next                                                            
   end                                                                             return  true
