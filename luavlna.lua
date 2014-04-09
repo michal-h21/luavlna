@@ -20,6 +20,18 @@ local singlechars = {} -- {a=true,i=true,z=true, v=true, u=true, o = true}
 
 local initials = {}
 
+local main_language = nil
+
+-- when main_language is set, we will not use lang info in the nodes, but 
+-- main language instead
+local get_language = function(lang)
+	return main_language or lang
+end
+
+local set_main_language = function(lang)
+  main_language = lang
+end
+
 local debug = false
 local tex4ht = false
 -- Enable processing only for certain letters
@@ -109,6 +121,7 @@ end
 
 local init_buffer = ""
 local is_initial = function(c, lang)
+	local lang = get_language(lang)
   local allowed_initials = initials[lang] or {}
   init_buffer = init_buffer .. c
   if is_uppercase(c) and init_buffer == c then
@@ -139,7 +152,7 @@ local function prevent_single_letter (head)
       space=true
       init = is_initial " " -- reset initials
     elseif space==true and id == 37 and utf_match(utf_char(head.char), alpha) then -- a letter 
-      local lang = head.lang
+      local lang = get_language(head.lang)
       local char = utf_char(head.char)
       init = is_initial(char,lang)
       local s = singlechars[lang] or {} -- load singlechars for node's lang
@@ -177,4 +190,5 @@ M.singlechars = set_singlechars
 M.initials    = set_initials
 M.set_tex4ht  = set_tex4ht
 M.debug = set_debug
+M.set_main_language = set_main_language
 return M

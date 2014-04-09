@@ -37,6 +37,12 @@ set_compounds = function(lang, compounds)
   end
   luavlna.initials(langid, compoundstable)
 end
+
+set_main_language = function(lang)
+  local langid = languages:get_number(lang)
+  if not langid then return nil, "Cannot find language number for: "..lang end
+  luavlna.set_main_language(langid)
+end	
 }     
 
 % Set letters which are prevented from breaking
@@ -51,6 +57,10 @@ end
 % Enable inserting of visual marks for debugging
 \def\preventsingledebugon{%
 \directlua{luavlna.debug(true)}
+}
+
+\def\preventsinglelang#1{%
+	\directlua{set_main_language("#1")}
 }
 
 % Disable inserting of visual marks for dewbugging
