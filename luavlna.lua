@@ -148,39 +148,42 @@ local function prevent_single_letter (head)
   while head do
     local id = head.id 
     local nextn = head.next
-    if id == 10 then 
-      space=true
-      init = is_initial " " -- reset initials
-    elseif space==true and id == 37 and utf_match(utf_char(head.char), alpha) then -- a letter 
-      local lang = get_language(head.lang)
-      local char = utf_char(head.char)
-      init = is_initial(char,lang)
-      local s = singlechars[lang] or {} -- load singlechars for node's lang
-      --[[
-      for k, n in pairs(singlechars) do
-      for c,_ in pairs(n) do
-      --print(type(k), c)
-      end
-      end
-      --]]
-      if test_fn(char, s) and nextn.id == 10 then    -- only if we are at a one letter word
-        head = insert_space(head)
-      end                                                                       
-      space = false
-      -- handle initials
-      -- uppercase letter followed by period (code 46)
-    elseif init and head.id == 37 and head.char == 46 and nextn.id == 10 then 
-      head = insert_space(head)
-    elseif head.id == 37 then
-      local char = utf_char(head.char)
-      init = is_initial(char, head.lang)
-		-- hlist support
-		elseif head.id == 0 then
-			prevent_single_letter(head.head)
-		-- vlist support
-		elseif head.id == 1 then
-			prevent_single_letter(head.head)
-    end                                                                         
+		local skip = node.has_attribute(head, luatexbase.attributes.preventsinglestatus) 
+		if skip ~= 1  then 
+			if id == 10 then 
+				space=true
+				init = is_initial " " -- reset initials
+			elseif space==true and id == 37 and utf_match(utf_char(head.char), alpha) then -- a letter 
+				local lang = get_language(head.lang)
+				local char = utf_char(head.char)
+				init = is_initial(char,lang)
+				local s = singlechars[lang] or {} -- load singlechars for node's lang
+				--[[
+				for k, n in pairs(singlechars) do
+				for c,_ in pairs(n) do
+				--print(type(k), c)
+				end
+				end
+				--]]
+				if test_fn(char, s) and nextn.id == 10 then    -- only if we are at a one letter word
+					head = insert_space(head)
+				end                                                                       
+				space = false
+				-- handle initials
+				-- uppercase letter followed by period (code 46)
+			elseif init and head.id == 37 and head.char == 46 and nextn.id == 10 then 
+				head = insert_space(head)
+			elseif head.id == 37 then
+				local char = utf_char(head.char)
+				init = is_initial(char, head.lang)
+				-- hlist support
+			elseif head.id == 0 then
+				prevent_single_letter(head.head)
+				-- vlist support
+			elseif head.id == 1 then
+				prevent_single_letter(head.head)
+			end               
+		end
     head = head.next                                                            
   end                                                                             return  true
 end               

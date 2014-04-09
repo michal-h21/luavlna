@@ -1,5 +1,6 @@
 \input luatexbase.sty
 
+\newluatexattribute\preventsinglestatus
 % Modify pre_linebreak_filter callback so the spaces can be inserted
 \directlua{%         
 luavlna = require "luavlna" 
@@ -61,8 +62,15 @@ end
 
 \def\preventsinglelang#1{%
 	\directlua{set_main_language("#1")}
+} 
+
+\def\preventsingleon{%
+	\preventsinglestatus=2
 }
 
+\def\preventsingleoff{
+	\preventsinglestatus=1
+}
 % Disable inserting of visual marks for dewbugging
 \def\preventsingledebugoff{%
 \directlua{luavlna.debug(false)}
@@ -70,4 +78,4 @@ end
 \singlechars{czech}{AIiVvOoUuSsZzKk}
 \singlechars{slovak}{AIiVvOoUuSsZzKk}
 
-\compoundinitials{czech}{Ch}
+\compoundinitials{czech}{Ch,CH}

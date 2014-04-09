@@ -79,9 +79,18 @@ Default values:
 By default, language of the nodes is taken into account. If you want to use
 settings for one language for a whole document, you can use following command:
 
-    	\prevensinglelang{language name}
+    	\preventsinglelang{language name}
 
+##Turning off processing
 
+If you want to stop processing of the spaces in the document you can use
+command
+
+    \preventsingleoff
+
+To resume processing, use
+
+    \preventsingleon
 
 ## Debugging commands 
 
