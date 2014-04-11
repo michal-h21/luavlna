@@ -40,7 +40,7 @@ should be taken into account for different languages.
 % The code works also for single letters at the beginning of the brackets.
 
 
-\section{Usage}
+\section{Usage}o
 
 The usage is simple:
 
@@ -139,7 +139,7 @@ separated list of compound letters, in exact form in which they can appear.
 Default values:
 
 \begin{verbatim}
-  \compoundinitials{czech}{Ch}
+  \compoundinitials{czech}{Ch,CH}
 \end{verbatim}
 
 \subsection{Turning off language switching}
@@ -173,4 +173,19 @@ To resume processing, use
 
 Insert debugging marks on/off. Default off.
 
+\section{Lua module \texttt{langno.lua}}
+
+When we process glyph nodes with lua\TeX\ callbacks, there are \verb|lang| 
+fields available. These are numerical codes of languages, but no information
+about language names easily accesible from lua side is available.\footnote{%
+	Language names are stored in \TeX macros like \verb|\string\l@langname|, but 
+	different formats use different naming of these macros}
+These numbers are format dependent, majority of formats like 
+lua\LaTeX use \verb|language.dat| file provided by \verb|babel| 
+for assign numbers to languages, but for example \verb|csplain| 
+use its own system.
+
+To allow easy setting of language dependent parameters, \verb|langno| module 
+was created. It's purpose is to translate language code to language name and 
+the other way. 
 \end{document}
