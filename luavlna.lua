@@ -38,15 +38,29 @@ local tex4ht = false
 -- must be table in the {char = true, char2=true} form
 local set_singlechars= function(lang,c)
   --print("Set single chars lua")
-  local lang = tonumber(lang)
-  print("language: "..lang)
+	print(type(lang), lang)
+	if type(lang) == "table" then
+		for _,l in pairs(lang) do
+      print("language: ",l)
+			singlechars[l] = c
+		end
+	else
+    local lang = tonumber(lang)
+    print("language: ",lang)
   -- for k,_ in pairs(c) do print(k) end
-  singlechars[lang] = c
+    singlechars[lang] = c
+	end
 end
 
 local set_initials = function(lang,c)
-  local lang = tonumber(lang)
-  initials[lang]=c
+	if type(lang) == "table" then
+		for _,l in pairs(lang) do
+			initials[l] = c
+		end
+	else
+    local lang = tonumber(lang)
+    initials[lang]=c
+	end
 end
 
 set_initials(16,{["Č"] =  true, F= true, G = true})

@@ -11,7 +11,7 @@ local M = {}
 
 local tex = tex or {}
 
-local format = tex.format or "luatex"
+local format = tex.formatname -- or "luatex"
 
 -- languages object
 local lang_obj = function(names, numbers)
@@ -58,16 +58,35 @@ local load_lang_dat = function()
   return lang_obj(langnum, numlang)--{numbers = numlang, names = langnum}
 end
 
+local load_csplain= function()
+	local l = require "csplain-langs"
+	local langnum = {}
+	local numlang = {}
+	for k, v in pairs(l) do
+		local first = k:gsub(" *;.*","")
+		print(first)
+		langnum[first] = v
+		for _,i in ipairs(v) do
+			numlang[i] = first
+		end
+	end
+	return lang_obj(langnum, numlang)
+end
+
+
 -- because different formats may use different ways to load languages
 -- driver mechanism is provided.  
 local drivers = {}
 drivers["luatex"]  = load_lang_dat
 drivers["default"] = load_lang_dat
-
+drivers["csplain"] = load_csplain
+drivers["pdfcsplain"] = load_csplain
+drivers["luaplain"] = load_csplain
 
 local load_languages = function(name)
-  local name = name or format or "default"
-  local func =  drivers[name] 
+  local name = name or format
+	print ("Load driver: "..name)
+  local func =  drivers[name] or drivers["default"]
   if not func then return nil, "Cannot find driver function "..name end
   return func()
 end
