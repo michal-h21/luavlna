@@ -4,6 +4,7 @@
 \usepackage{fontspec}
 \setmainfont[Ligatures=TeX]{Linux Libertine O}
 \usepackage[czech,english]{babel}
+\usepackage{luacode}
 %\usepackage[]{polyglossia}
 %\setmainlanguage{english}
 %\setotherlanguage{czech}
@@ -187,5 +188,39 @@ use its own system.
 
 To allow easy setting of language dependent parameters, \verb|langno| module 
 was created. It's purpose is to translate language code to language name and 
-the other way. 
+the other way. lua\LaTeX, lua\TeX\ and CSplain formats are supported at the moment.
+
+\subsection{Recognized languages}
+\subsubsection{lua\TeX\ and lua\LaTeX}
+
+File \verb|language.dat| is processed to load language names, aliases and assigned numbers. These language names are the same as supported by \verb|babel| package.
+
+\begin{quotation}
+  \small\noindent
+\begin{luacode*}
+  langno = require "langno"
+  function print_format_lang(fmt)
+    local luatex = langno.load_languages(fmt)
+    local t = {}
+    for k, v in pairs(luatex.names) do
+      t[#t+1]=k
+    end
+    table.sort(t)
+    tex.print(table.concat(t,", "))
+  end
+  print_format_lang("luatex")
+\end{luacode*}
+\end{quotation}
+
+\subsubsection{CSplain}
+
+Different method is used. File \verb|hyphen.lan| is included in CSplain, where 
+language numbers are assigned to ISO-639-1 or ISO-639-2 language codes. These language codes were 
+
+\begin{quotation}
+  \small\noindent
+  \begin{luacode*}
+    print_format_lang("csplain")
+  \end{luacode*}
+\end{quotation}
 \end{document}
