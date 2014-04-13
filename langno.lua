@@ -5,7 +5,6 @@
 --
 -- this library tries to find language names by parsing `language.dat` file
 -- 
-kpse.set_program_name("luatex")
 
 local M = {}
 
