@@ -8,13 +8,18 @@
 %\usepackage[]{polyglossia}
 %\setmainlanguage{english}
 %\setotherlanguage{czech}
-\usepackage{url}
-%\usepackage{hyperref}
+%\usepackage{url}
+\usepackage{hyperref}
 %\input prevent-single
 %\usepackage[]{prevent-single}
 \usepackage[]{luavlna}
 %\input prevent-single
 %\def\preventsingledebugon{}
+\newenvironment{mycode}{
+	%\leavevmode%
+	\medskip%
+	\parindent=0pt%
+}{\medskip}
 \begin{document}
 \title{The \verb|luavlna| package}
 \author{Michal Hoftich (\url{michal.h21@gmail.com})}
@@ -31,8 +36,8 @@ for enc\TeX, \verb!xevlna! for Xe\TeX,
 \verb!impnattypo! for lua\LaTeX). %This package is for plain
 %lua\TeX and for lua\LaTeX.
 
-Other feature of this package is including of non-breakable space after initials
-, like in personal names. 
+Other feature of this package is including of non-breakable space after 
+initials, like in personal names. 
 
 The code is modified version of Patrick Gundlach's answer on
 TeX.sx\footnote{\url{http://tex.stackexchange.com/a/28128/2891}}.
@@ -41,7 +46,7 @@ should be taken into account for different languages.
 % The code works also for single letters at the beginning of the brackets.
 
 
-\section{Usage}o
+\section{Usage}
 
 The usage is simple:
 
@@ -108,9 +113,9 @@ in the preamble.
 
 \section{Commands}
 
-\begin{verbatim}
-\singlechars{language name}{letters} 
-\end{verbatim}
+\begin{mycode}
+\cmd{\singlechars}\marg{language name}\marg{letters} 
+\end{mycode}
 
 Enable this feature for certain letters in given language. 
 %Language code is internall \TeX\ code for the language, it is $0$ for English, 
@@ -119,58 +124,61 @@ Enable this feature for certain letters in given language.
 
 Default values:
 
+\begin{mycode}
 \begin{verbatim}
-	%% only Czech and Slovak are supported out of the box
-	\singlechars{czech}{AIiVvOoUuSsZzKk}
-	\singlechars{slovak}{AIiVvOoUuSsZzKk}
+%% only Czech and Slovak are supported out of the box
+\singlechars{czech}{AIiVvOoUuSsZzKk}
+\singlechars{slovak}{AIiVvOoUuSsZzKk}
 \end{verbatim}
-
+\end{mycode}
 
 %By default, all
 %single letters are processed, this command can be used to pass a
 %string of characters, which should be processed only.
 
-\begin{verbatim}
-  \compoundinitials{language name}{compounds}
-\end{verbatim}
+\begin{mycode}
+\cmd{\compoundinitials}\marg{language name}\marg{compounds}
+\end{mycode}
 
 Declare compound letters for given language. Second argument should be comma 
 separated list of compound letters, in exact form in which they can appear.
 
 Default values:
 
+\begin{mycode}
 \begin{verbatim}
-  \compoundinitials{czech}{Ch,CH}
+\compoundinitials{czech}{Ch,CH}
 \end{verbatim}
+\end{mycode}
 
 \subsection{Turning off language switching}
 
 By default, language of the nodes is taken into account. If you want to use
 settings for one language for a whole document, you can use following command:
 
-\begin{verbatim}
-	\preventsinglelang{language name}
-\end{verbatim}
+\begin{mycode}
+\cmd{\preventsinglelang}\marg{language name}
+\end{mycode}
 
 \subsection{Turning off processing}
 
 If you want to stop processing of the spaces in the document you can use command
 
-\begin{verbatim}
-	\preventsingleoff
-\end{verbatim}
+\begin{mycode}
+\cmd{\preventsingleoff}
+\end{mycode}
 
 To resume processing, use
 
-\begin{verbatim}
-	\preventsingleon
-\end{verbatim}
+\begin{mycode}
+\cmd{\preventsingleon}
+\end{mycode}
 
 \subsection{Debugging commands}
-\begin{verbatim}
-\preventsingledebugon
-\preventsingledebugoff
-\end{verbatim}
+\begin{mycode}
+\cmd{\preventsingledebugon}\par
+\cmd{\preventsingledebugoff}
+\end{mycode}
 
 Insert debugging marks on/off. Default off.
 
@@ -215,7 +223,9 @@ File \verb|language.dat| is processed to load language names, aliases and assign
 \subsubsection{CSplain}
 
 Different method is used. File \verb|hyphen.lan| is included in CSplain, where 
-language numbers are assigned to ISO-639-1 or ISO-639-2 language codes. These language codes were 
+language numbers are assigned to ISO-639-1 or ISO-639-2 language codes. 
+These language codes were then normalized to names used vy \verb|babel|, or 
+standard English language names.
 
 \begin{quotation}
   \small\noindent
