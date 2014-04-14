@@ -1,0 +1,28 @@
+\documentclass{csbulletin}
+\usepackage{fontspec}
+\usepackage{hologo}
+\begin{document}
+\title{\texttt{luavlna}: \texttt{vlna} pro formáty lua\TeX u}
+\EnglishTitle{\texttt{luavlna}: \texttt{vlna} for lua\TeX\ formats}
+\author{Michal Hoftich}
+\maketitle
+\begin{abstract}
+Sem přijde abstrakt
+\end{abstract}
+
+Podle českých typografických norem by jednopísmenné předložky neměly stát na 
+konci řádků. V \TeX u se tento problém řeší nahrazením mezery znakem \verb|~|,
+který vkládá nezalomitelnou mezeru. Protože se na toto pravidlo snadno zapomíná,
+existují různé pomůcky, které vkládají nezalomitelnou mezeru automaticky.
+
+Klasickým nástrojem je program \verb|vlna|, který provádí nahrazení přímo na
+úrovni zdrojového kódu. Později vznikly další projekty, které nemodifikují přímo
+zdrojový kód, ale modifikují tok řetězců nebo tokenů při zpracování dokumentu 
+\TeX em. Jedná se o \textsc{encxvlna} pro Enc\TeX a X\raisebox{.3ex}{Ǝ}Vlna pro \hologo{XeTeX}.
+% Nedaří se mi použít záporné hodnoty pro \raisebox, je znak '-' aktivní?
+Jejich výhodou je, 
+\begin{summary}
+	Anglický abstrakt
+
+\end{summary}
+\end{document}
