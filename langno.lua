@@ -63,7 +63,7 @@ local load_csplain= function()
 	local numlang = {}
 	for k, v in pairs(l) do
 		local first = k:gsub(" *;.*","")
-		print(first)
+		--print(first)
 		langnum[first] = v
 		for _,i in ipairs(v) do
 			numlang[i] = first
