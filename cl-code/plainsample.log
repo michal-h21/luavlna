@@ -1,0 +1,189 @@
+This is LuaTeX, Version beta-0.70.2-2012062812 (TeX Live 2012) (format=luatex 2013.2.26)  18 APR 2014 12:58
+ restricted \write18 enabled.
+**plainsample.tex
+(./plainsample.tex
+luatex-hyphen: using data file: /home/mint/texlive/2012/texmf-var/tex/generic/c
+onfig/language.dat.lua
+luatex-hyphen: loading patterns and exceptions for: czech (\language16)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luaotfload/luaotfload.sty
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/luatexbase.sty
+Package: luatexbase 2010/10/06 v0.3 Module utilities for LuaTeX
+(/home/mint/texlive/2012/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX detected.
+)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/luatexbase-compat.sty
+Package: luatexbase-compat 2010/10/10 v0.3 Compatibility tools for LuaTeX
+(/home/mint/texlive/2012/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package ifluatex Info: The package is already loaded.
+))
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/luatexbase-loader.sty
+Package: luatexbase-loader 2010/10/10 v0.3 Lua module loader for LuaTeX
+(/home/mint/texlive/2012/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package ifluatex Info: The package is already loaded.
+)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/luatexbase-compat.sty
+)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/luatexbase.loader.lua
+))
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/luatexbase-regs.sty
+Package: luatexbase-regs 2010/10/10 v0.3 Registers allocation for LuaTeX
+(/home/mint/texlive/2012/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package ifluatex Info: The package is already loaded.
+))
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/luatexbase-attr.sty
+Package: luatexbase-attr 2011/05/21 v0.31 Attributes allocation for LuaTeX
+(/home/mint/texlive/2012/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package ifluatex Info: The package is already loaded.
+)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/luatexbase-compat.sty
+)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/luatexbase-loader.sty
+)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/attr.lua))
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/luatexbase-cctb.sty
+Package: luatexbase-cctb 2010/10/10 v0.3 Catcodetable allocation for LuaTeX
+(/home/mint/texlive/2012/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package ifluatex Info: The package is already loaded.
+)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/luatexbase-loader.sty
+)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/cctb.lua)
+\lltxb@catcodetable@alloc=\count277
+\@tempcnta=\count278
+\@tempcntb=\count279
+\CatcodeTableIniTeX=\luatexcatcodetable1
+\CatcodeTableString=\luatexcatcodetable3
+\CatcodeTableOther=\luatexcatcodetable5
+\CatcodeTableLaTeX=\luatexcatcodetable7
+\CatcodeTableLaTeXAtLetter=\luatexcatcodetable9
+\CatcodeTableExpl=\luatexcatcodetable11
+)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/luatexbase-mcb.sty
+Package: luatexbase-mcb 2010/10/10 v0.3 Callback management for LuaTeX
+(/home/mint/texlive/2012/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package ifluatex Info: The package is already loaded.
+)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/luatexbase-modutils.s
+ty
+Package: luatexbase-modutils 2010/10/10 v0.3 Module utilities for LuaTeX
+(/home/mint/texlive/2012/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package ifluatex Info: The package is already loaded.
+)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/luatexbase-loader.sty
+)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/modutils.lua))
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/mcb.lua)
+Lua module: luatexbase-mcb 2010/05/12 0.2 register several functions in a callb
+ack
+)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luatexbase/luatexbase-modutils.s
+ty))
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs.lua)
+Lua module: lualibs 2011/01/20 0.96 Lua additional functions.
+
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-string.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-lpeg.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-boolean.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-number.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-math.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-table.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-aux.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-io.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-os.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-file.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-md5.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-dir.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-unicode.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-utils.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-dimen.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-url.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/lualibs/lualibs-set.lua)
+(/home/mint/texlive/2012/texmf-dist/tex/luatex/luaotfload/luaotfload.lua)
+Lua module: luaotfload 2012/05/28 1.27 OpenType layout system.
+
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-luat-dum.lua.(using cache: /home/mint/.texlive2012/texmf-var/luatex-cac
+he/generic)
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-luat-ovr.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-data-con.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-ini.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-node-dum.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-node-inj.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-tfm.lua.
+luatexbase.attributes["otfl@state"] = 1
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-cid.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-ott.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-map.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-otf.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-otd.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-oti.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-otb.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-otn.lua.
+luatexbase.attributes["otfl@markbase"] = 2
+luatexbase.attributes["otfl@markmark"] = 3
+luatexbase.attributes["otfl@markdone"] = 4
+luatexbase.attributes["otfl@cursbase"] = 5
+luatexbase.attributes["otfl@curscurs"] = 6
+luatexbase.attributes["otfl@cursdone"] = 7
+luatexbase.attributes["otfl@kernpair"] = 8
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-ota.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-otc.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-def.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-xtx.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-dum.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-nms.lua.
+luaotfload: loading file /home/mint/texlive/2012/texmf-dist/tex/luatex/luaotflo
+ad/otfl-font-clr.lua.
+Module luatexbase-mcb info: creating 'luaotfload.patch_font' type 4
+Module luatexbase-mcb info: inserting 'luaotfload.pre_linebreak_filter'
+(luatexbase-mcb)            at position 1 in 'pre_linebreak_filter'
+Module luatexbase-mcb info: inserting 'luaotfload.hpack_filter'
+(luatexbase-mcb)            at position 1 in 'hpack_filter'
+Module luatexbase-mcb info: resetting callback 'define_font'
+Module luatexbase-mcb info: inserting 'luaotfload.define_font'
+(luatexbase-mcb)            at position 1 in 'define_font'
+Module luatexbase-mcb info: inserting 'luaotfload.find_vf_file'
+(luatexbase-mcb)            at position 1 in 'find_vf_file'
+Module luatexbase-mcb info: inserting 'unicodemath.set_sscale_diments'
+(luatexbase-mcb)            at position 1 in 'luaotfload.patch_font'
+)
+luaotfload | Font names database loaded: /home/mint/.texlive2012/texmf-var/luat
+ex-cache/generic/names/otfl-names.lua
+luaotfload | load font: font family='linuxlibertineo', subfamily='regular' foun
+d: LinLibertine_R.otf(load: /home/mint/.texlive2012/texmf-var/luatex-cache/gene
+ric/fonts/otf/temp-linlibertine-r.lua)
+(./sample-callback.lua)
+Module luatexbase-mcb info: inserting 'sample callback'
+(luatexbase-mcb)            at position 2 in 'pre_linebreak_filter'
+luatex-hyphen: loading patterns and exceptions for: ukenglish (\language20) [1{
+/home/mint/texlive/2012/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] )</home/
+mint/texlive/2012/texmf-dist/fonts/opentype/public/libertine/LinLibertine_R.otf
+></home/mint/texlive/2012/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb>
+Output written on plainsample.pdf (1 page, 13524 bytes).
+
+PDF statistics: 19 PDF objects out of 1000 (max. 8388607)
+ 11 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 131072)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+

@@ -1,0 +1,13 @@
+\uselanguage{czech}
+\input luaotfload.sty
+\font\normal={Linux Libertine O} at 12pt
+\normal
+% vložíme callback
+\directlua{%
+local clb = require "sample-callback"
+luatexbase.add_to_callback("pre_linebreak_filter",clb, "sample callback")
+}
+
+Příliš žluťoučký kůň \hbox{úpěl}. \uselanguage{british} English sentence.
+
+\bye

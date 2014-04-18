@@ -1,15 +1,22 @@
+\def\myminus{-}
 \documentclass{csbulletin}
 \usepackage{fontspec}
 \usepackage{hologo}
+\usepackage{luavlna}
+\usepackage{url}
+
+\preventsingledebugon
+
 \begin{document}
-\title{\texttt{luavlna}: \texttt{vlna} pro formáty lua\TeX u}
-\EnglishTitle{\texttt{luavlna}: \texttt{vlna} for lua\TeX\ formats}
+\title{\texttt{luavlna}: \texttt{vlna} pro formáty \hologo{LuaTeX}u}
+\EnglishTitle{\texttt{luavlna}: \texttt{vlna} for \hologo{LuaTeX} formats}
 \author{Michal Hoftich}
 \maketitle
 \begin{abstract}
 Sem přijde abstrakt
 \end{abstract}
 
+\section{Úvod}
 Podle českých typografických norem by jednopísmenné předložky neměly stát na 
 konci řádků. V \TeX u se tento problém řeší nahrazením mezery znakem \verb|~|,
 který vkládá nezalomitelnou mezeru. Protože se na toto pravidlo snadno zapomíná,
@@ -18,9 +25,82 @@ existují různé pomůcky, které vkládají nezalomitelnou mezeru automaticky.
 Klasickým nástrojem je program \verb|vlna|, který provádí nahrazení přímo na
 úrovni zdrojového kódu. Později vznikly další projekty, které nemodifikují přímo
 zdrojový kód, ale modifikují tok řetězců nebo tokenů při zpracování dokumentu 
-\TeX em. Jedná se o \textsc{encxvlna} pro Enc\TeX a X\raisebox{.3ex}{Ǝ}Vlna pro \hologo{XeTeX}.
+\TeX em. Jedná se o \textsc{encxvlna} pro Enc\TeX\ a X\raisebox{\myminus.5ex}{Ǝ}\kern\myminus.3ex Vlna pro \hologo{XeTeX}.
 % Nedaří se mi použít záporné hodnoty pro \raisebox, je znak '-' aktivní?
-Jejich výhodou je, 
+
+Protože \hologo{LuaTeX} nabízí snadné zpracování datových struktur \TeX u 
+(boxy, nódy, fonty, apod.), jeví se jako logický krok využití těchto možností
+k vytvoření nové verze \verb|vlny|, která by využívala těchto schopností. 
+
+Jako odpověď na otázku možnosti automatického vkládání nezalomitelných mezer 
+na serveru TeX.sx\footnote{\url{http://tex.stackexchange.com/q/27780/2891}}, 
+Patrick Gundlach předvedl řešení využívající nódy zpracovávající callbacky 
+\hologo{LuaTeX}u. Toto řešení se později stalo součástí balíčku\footnote{%
+\url{http://www.ctan.org/pkg/impnattypo}} a také moje řešení z něho vychází.
+
+\section{Callbacky a nódy v \hologo{LuaTeX}u}
+
+Callbacky jsou funkce, které jsou volány při různých událostech v průběhu
+zpracování dokumentu. Velkou skupinou callbacků jsou callbacky zpracovávající 
+seznamy nódů, datovou strukturu obsahující znaky, mezery a ostatní, vzniklou po
+zpracování tokenů. Výhodou je, že tato struktura obsahuje již finální informaci,
+která bude vysázená v dokumentu, po expanzi všech maker. Nódy samotné jsou 
+objekty, které obsahují různá pole v závislosti na typu nódu.
+
+\iffalse
+Pojďme se podívat na praktickou ukázku, která vypíše do terminálu v průběhu 
+kompilace text dokumentu. Využijeme k tomu callback \verb|pre_linebreak_filter|,
+který zpracovává seznam nódů před zalomením do odstavců.
+
+\begin{verbatim}
+\uselanguage{czech}
+\input luaotfload.sty
+\font\normal={Linux Libertine O} at 12pt
+\normal
+% vložíme callback
+\directlua{%
+	local clb = require "sample-callback"
+	luatexbase.add_to_callback("pre_linebreak_filter",clb, "sample callback")
+}
+
+Příliš žluťoučký kůň \hbox{úpěl}. \uselanguage{british}English sentence.
+
+\bye
+	
+\end{verbatim}
+
+Tato ukázka je určená pro čistý \hologo{LuaTeX}, callback je vkládán v 
+příkazu \verb|directlua|, jeho samotný kód je umístěn v souboru 
+\verb|sample-callback|:
+
+\begin{verbatim}
+local glyph_id = node.id("glyph")
+local glue_id  = node.id("glue")
+
+-- Převede pole nódu char na znak
+local char = unicode.utf8.char 
+
+local function mycallback(head)
+	local text = {}
+	for n in node.traverse(head) do
+		if n.id == glyph_id then
+			table.insert(text, char(n.char))
+		elseif n.id == glue_id then
+			table.insert(text, " ")
+		end
+	end
+	print(table.concat(text, ", " ))
+	return true
+end
+
+return mycallback
+\end{verbatim}	
+
+\fi
+
+Protože potřebujeme zpracovat seznam nódů před zalomením do odstavců, můžeme
+využít callback pojmenovaný \verb|pre_linebreak_filter|.
+
 \begin{summary}
 	Anglický abstrakt
 
