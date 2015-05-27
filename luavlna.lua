@@ -25,7 +25,7 @@ local main_language = nil
 -- when main_language is set, we will not use lang info in the nodes, but 
 -- main language instead
 local get_language = function(lang)
-	return main_language or lang
+  return main_language or lang
 end
 
 local set_main_language = function(lang)
@@ -38,29 +38,29 @@ local tex4ht = false
 -- must be table in the {char = true, char2=true} form
 local set_singlechars= function(lang,c)
   --print("Set single chars lua")
-	print(type(lang), lang)
-	if type(lang) == "table" then
-		for _,l in pairs(lang) do
+  print(type(lang), lang)
+  if type(lang) == "table" then
+    for _,l in pairs(lang) do
       print("language: ",l)
-			singlechars[l] = c
-		end
-	else
+      singlechars[l] = c
+    end
+  else
     local lang = tonumber(lang)
     print("language: ",lang)
-  -- for k,_ in pairs(c) do print(k) end
+    -- for k,_ in pairs(c) do print(k) end
     singlechars[lang] = c
-	end
+  end
 end
 
 local set_initials = function(lang,c)
-	if type(lang) == "table" then
-		for _,l in pairs(lang) do
-			initials[l] = c
-		end
-	else
+  if type(lang) == "table" then
+    for _,l in pairs(lang) do
+      initials[l] = c
+    end
+  else
     local lang = tonumber(lang)
     initials[lang]=c
-	end
+  end
 end
 
 set_initials(16,{["Č"] =  true, F= true, G = true})
@@ -135,7 +135,7 @@ end
 
 local init_buffer = ""
 local is_initial = function(c, lang)
-	local lang = get_language(lang)
+  local lang = get_language(lang)
   local allowed_initials = initials[lang] or {}
   init_buffer = init_buffer .. c
   if is_uppercase(c) and init_buffer == c then
@@ -162,42 +162,42 @@ local function prevent_single_letter (head)
   while head do
     local id = head.id 
     local nextn = head.next
-		local skip = node.has_attribute(head, luatexbase.attributes.preventsinglestatus) 
-		if skip ~= 1  then 
-			if id == 10 then 
-				space=true
-				init = is_initial " " -- reset initials
-			elseif space==true and id == 37 and utf_match(utf_char(head.char), alpha) then -- a letter 
-				local lang = get_language(head.lang)
-				local char = utf_char(head.char)
-				init = is_initial(char,lang)
-				local s = singlechars[lang] or {} -- load singlechars for node's lang
-				--[[
-				for k, n in pairs(singlechars) do
-				for c,_ in pairs(n) do
-				--print(type(k), c)
-				end
-				end
-				--]]
-				if test_fn(char, s) and nextn.id == 10 then    -- only if we are at a one letter word
-					head = insert_space(head)
-				end                                                                       
-				space = false
-				-- handle initials
-				-- uppercase letter followed by period (code 46)
-			elseif init and head.id == 37 and head.char == 46 and nextn.id == 10 then 
-				head = insert_space(head)
-			elseif head.id == 37 then
-				local char = utf_char(head.char)
-				init = is_initial(char, head.lang)
-				-- hlist support
-			elseif head.id == 0 then
-				prevent_single_letter(head.head)
-				-- vlist support
-			elseif head.id == 1 then
-				prevent_single_letter(head.head)
-			end               
-		end
+    local skip = node.has_attribute(head, luatexbase.attributes.preventsinglestatus) 
+    if skip ~= 1  then 
+      if id == 10 then 
+        space=true
+        init = is_initial " " -- reset initials
+      elseif space==true and id == 37 and utf_match(utf_char(head.char), alpha) then -- a letter 
+        local lang = get_language(head.lang)
+        local char = utf_char(head.char)
+        init = is_initial(char,lang)
+        local s = singlechars[lang] or {} -- load singlechars for node's lang
+        --[[
+        for k, n in pairs(singlechars) do
+        for c,_ in pairs(n) do
+        --print(type(k), c)
+        end
+        end
+        --]]
+        if test_fn(char, s) and nextn.id == 10 then    -- only if we are at a one letter word
+          head = insert_space(head)
+        end                                                                       
+        space = false
+        -- handle initials
+        -- uppercase letter followed by period (code 46)
+      elseif init and head.id == 37 and head.char == 46 and nextn.id == 10 then 
+        head = insert_space(head)
+      elseif head.id == 37 then
+        local char = utf_char(head.char)
+        init = is_initial(char, head.lang)
+        -- hlist support
+      elseif head.id == 0 then
+        prevent_single_letter(head.head)
+        -- vlist support
+      elseif head.id == 1 then
+        prevent_single_letter(head.head)
+      end               
+    end
     head = head.next                                                            
   end                                                                             return  true
 end               
