@@ -63,7 +63,8 @@ local set_initials = function(lang,c)
   end
 end
 
-set_initials(16,{["Č"] =  true, F= true, G = true})
+-- set_initials(16,{["Č"] =  true, F= true, G = true})
+set_initials(16,{["Č"] =  true, Bc =  true,  F= true, G = true})
 
 local debug_tex4ht = function(head,p)
   --[[ local w = node.new("glyph")
@@ -135,19 +136,23 @@ end
 
 local init_buffer = ""
 local is_initial = function(c, lang)
-  local lang = get_language(lang)
-  local allowed_initials = initials[lang] or {}
-  init_buffer = init_buffer .. c
-  if is_uppercase(c) and init_buffer == c then
-    return true --allowed_initials[init_buffer]
-  else
-    local status = allowed_initials[init_buffer]
-    if not status then 
-      --print ("Not allowed initials:".. init_buffer)
-      init_buffer = ""
-    end
-    return status
-  end
+  return is_uppercase(c)
+  -- old version didn't work at all
+  -- local lang = get_language(lang)
+  -- local allowed_initials = initials[lang] or {}
+  -- init_buffer = init_buffer .. c
+  -- if is_uppercase(c) and init_buffer == c then
+  --   return true --allowed_initials[init_buffer]
+  -- else
+  --   local status = allowed_initials[init_buffer]
+  --   if not status then 
+  --     --print ("Not allowed initials:".. init_buffer)
+  --     init_buffer = ""
+  --   else
+  --     print("match allowed", init_buffer)
+  --   end
+  --   return status
+  -- end
 end
 
 
@@ -159,6 +164,7 @@ local function prevent_single_letter (head)
   local test_fn = match_table -- singlechars and match_table or match_char
   local space = true
   local init = false
+  local word = ""
   while head do
     local id = head.id 
     local nextn = head.next
@@ -166,11 +172,13 @@ local function prevent_single_letter (head)
     if skip ~= 1  then 
       if id == 10 then 
         space=true
+        word = ""
         init = is_initial " " -- reset initials
       elseif space==true and id == 37 and utf_match(utf_char(head.char), alpha) then -- a letter 
         local lang = get_language(head.lang)
         local char = utf_char(head.char)
-        init = is_initial(char,lang)
+        word = char
+        init = is_uppercase(char)-- is_initial(char,lang)
         local s = singlechars[lang] or {} -- load singlechars for node's lang
         --[[
         for k, n in pairs(singlechars) do
@@ -189,6 +197,7 @@ local function prevent_single_letter (head)
         head = insert_space(head)
       elseif head.id == 37 then
         local char = utf_char(head.char)
+        word = word .. char
         init = is_initial(char, head.lang)
         -- hlist support
       elseif head.id == 0 then
