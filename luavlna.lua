@@ -208,7 +208,8 @@ local function prevent_single_letter (head)
       end               
     end
     head = head.next                                                            
-  end                                                                             return  true
+  end                                                                             
+  return  true
 end               
 
 M.preventsingle = prevent_single_letter
