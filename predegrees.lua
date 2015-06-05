@@ -1,0 +1,5 @@
+return {
+  "Bc.",
+  "Ing.",
+  "prof.",
+}

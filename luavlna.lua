@@ -137,6 +137,14 @@ local is_initial = function(c, lang)
   return is_uppercase(c)
 end
 
+function Set (list)
+  local set = {}
+  for _, l in ipairs(list) do set[l] = true end
+  return set
+end
+
+local predegrees = Set (require "predegrees")
+--local sufdegrees = Set (require "sufdegrees")
 
 local function prevent_single_letter (head)                                   
   local singlechars = singlechars  -- or {} 
@@ -153,6 +161,9 @@ local function prevent_single_letter (head)
     local skip = node.has_attribute(head, luatexbase.attributes.preventsinglestatus) 
     if skip ~= 1  then 
       if id == 10 then 
+        if predegrees[word] then
+          insert_space(head.prev)
+        end
         space=true
         word = ""
         init = is_initial " " -- reset initials
