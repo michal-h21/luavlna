@@ -63,8 +63,6 @@ local set_initials = function(lang,c)
   end
 end
 
--- set_initials(16,{["Č"] =  true, F= true, G = true})
-set_initials(16,{["Č"] =  true, Bc =  true,  F= true, G = true})
 
 local debug_tex4ht = function(head,p)
   --[[ local w = node.new("glyph")
@@ -137,22 +135,6 @@ end
 local init_buffer = ""
 local is_initial = function(c, lang)
   return is_uppercase(c)
-  -- old version didn't work at all
-  -- local lang = get_language(lang)
-  -- local allowed_initials = initials[lang] or {}
-  -- init_buffer = init_buffer .. c
-  -- if is_uppercase(c) and init_buffer == c then
-  --   return true --allowed_initials[init_buffer]
-  -- else
-  --   local status = allowed_initials[init_buffer]
-  --   if not status then 
-  --     --print ("Not allowed initials:".. init_buffer)
-  --     init_buffer = ""
-  --   else
-  --     print("match allowed", init_buffer)
-  --   end
-  --   return status
-  -- end
 end
 
 
@@ -178,7 +160,7 @@ local function prevent_single_letter (head)
         local lang = get_language(head.lang)
         local char = utf_char(head.char)
         word = char
-        init = is_uppercase(char)-- is_initial(char,lang)
+        init = is_initial(char,lang)
         local s = singlechars[lang] or {} -- load singlechars for node's lang
         --[[
         for k, n in pairs(singlechars) do
