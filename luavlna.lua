@@ -144,7 +144,7 @@ function Set (list)
 end
 
 local predegrees = Set (require "predegrees")
---local sufdegrees = Set (require "sufdegrees")
+local sufdegrees = Set (require "sufdegrees")
 
 local function prevent_single_letter (head)                                   
   local singlechars = singlechars  -- or {} 
@@ -154,17 +154,26 @@ local function prevent_single_letter (head)
   local test_fn = match_table -- singlechars and match_table or match_char
   local space = true
   local init = false
+  local anchor = head
   local word = ""
   while head do
     local id = head.id 
     local nextn = head.next
     local skip = node.has_attribute(head, luatexbase.attributes.preventsinglestatus) 
     if skip ~= 1  then 
-      if id == 10 then 
+      if id == 10 then
+        local last = string.sub(word, -1)
+        while word ~= "" and last ~= "." and not is_alpha(last) do
+          word = string.sub(word, 1, -2) -- remove last char
+          last = string.sub(word, -1)
+        end
         if predegrees[word] then
           insert_space(head.prev)
+        elseif sufdegrees[word] then
+          insert_space(anchor.prev)
         end
         space=true
+        anchor = head
         word = ""
         init = is_initial " " -- reset initials
       elseif space==true and id == 37 and utf_match(utf_char(head.char), alpha) then -- a letter 
