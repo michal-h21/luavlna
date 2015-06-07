@@ -146,6 +146,17 @@ local cut_off_end_chars = function(word, dot)
   return word
 end
 
+local part_until_non_alpha = function(word)
+  for i = 1, #word do
+    local c = word:sub(i,i)
+    if not is_alpha(c) then
+      word = string.sub(word, 1, i-1)
+      break
+    end
+  end
+  return word
+end
+
 
 function Set (list)
   local set = {}
@@ -158,6 +169,7 @@ local presi = (require "presi")
 local si = Set (require "si")
 
 local is_unit = function(word)
+  word = part_until_non_alpha(word)
   if si[word] then
     return true
   end
