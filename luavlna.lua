@@ -137,10 +137,40 @@ local is_initial = function(c, lang)
   return is_uppercase(c)
 end
 
+local cut_off_end_chars = function(word, dot)
+  local last = string.sub(word, -1)
+  while word ~= "" and (not dot or last ~= ".") and not is_alpha(last) do
+    word = string.sub(word, 1, -2) -- remove last char
+    last = string.sub(word, -1)
+  end
+  return word
+end
+
+
 function Set (list)
   local set = {}
   for _, l in ipairs(list) do set[l] = true end
   return set
+end
+
+
+local presi = (require "presi")
+local si = Set (require "si")
+
+local is_unit = function(word)
+  if si[word] then
+    return true
+  end
+  for _, prefix in pairs(presi) do
+    s, e = string.find(word, prefix)
+    if s == 1 then
+      local unit = string.sub(word, e+1)
+      if si[unit] then
+        return true
+      end
+    end
+  end
+  return false
 end
 
 local predegrees = Set (require "predegrees")
@@ -155,6 +185,7 @@ local function prevent_single_letter (head)
   local space = true
   local init = false
   local anchor = head
+  local wasnumber = false
   local word = ""
   while head do
     local id = head.id 
@@ -162,15 +193,23 @@ local function prevent_single_letter (head)
     local skip = node.has_attribute(head, luatexbase.attributes.preventsinglestatus) 
     if skip ~= 1  then 
       if id == 10 then
-        local last = string.sub(word, -1)
-        while word ~= "" and last ~= "." and not is_alpha(last) do
-          word = string.sub(word, 1, -2) -- remove last char
-          last = string.sub(word, -1)
-        end
-        if predegrees[word] then
-          insert_space(head.prev)
-        elseif sufdegrees[word] then
-          insert_space(anchor.prev)
+        if wasnumber then
+          if word ~= "" then
+            wasnumber = false
+            word = cut_off_end_chars(word, false)
+            if is_unit(word) then
+              insert_space(anchor.prev)
+            end
+          end
+        elseif tonumber(string.sub(word, -1)) ~= nil then
+          wasnumber = true
+        else
+          word = cut_off_end_chars(word, true)
+          if predegrees[word] then
+            insert_space(head.prev)
+          elseif sufdegrees[word] then
+            insert_space(anchor.prev)
+          end
         end
         space=true
         anchor = head
