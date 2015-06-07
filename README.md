@@ -6,13 +6,15 @@ line end, according to the typographical norms. There exists some
 external commands (like `vlna`) or packages (`encxvlna` for encTeX,
 `xevlna` for XeTeX, `impnattypo` for luaLaTeX).
 
-Other feature of this package is including of non-breakable space after initials
-, like in personal names. 
+Other feature of this package is including of non-breakable space after initials,
+like in personal names, after or before academic degrees
+and between numbers and units (SI and others).
 
 The code is modified version of Patrick Gundlach’s answer on
 TeX.sx[^1]. The difference is that it is possible to specify which
 single letters should be taken into account for different
 languages.
+The support for degrees and units was added as well.
 
 # Usage
 
@@ -41,7 +43,9 @@ The usage is simple:
     
     Různé možnosti [v závorkách <i jiných znacích
 
-    Podpora iniciál: G. F. Hegel, Č. Zíbrt
+    Podpora iniciál a titulů: M. J. Hegel, Ing. Běháková, Ph.D., Ž. Zíbrt.
+
+    Podpora jednotek: 100,5 MN\cdot{}s, 100.5 kJ, 200 µA, $-1$ dag, 12 MiB, 1 m$^3$/s.
 
     \preventsingledebugoff
     \bye
