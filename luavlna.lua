@@ -63,7 +63,6 @@ local set_initials = function(lang,c)
   end
 end
 
-set_initials(16,{["Č"] =  true, F= true, G = true})
 
 local debug_tex4ht = function(head,p)
   --[[ local w = node.new("glyph")
@@ -99,7 +98,7 @@ local set_tex4ht = function()
   tex4ht = true
 end
 
-local insert_space = function(head)
+local insert_penalty = function(head)
   local p = node.new("penalty")                                           
   p.penalty = 10000                                                       
   local debug = debug or false
@@ -109,6 +108,18 @@ local insert_space = function(head)
     node.insert_after(head,head,p) 
   end
   return head
+end
+
+local replace_with_thin_space = function(head)
+  local gluenode = node.new(node.id("glue"))
+  local gluespec = node.new(node.id("glue_spec"))
+  gluespec.width = tex.sp("0.2em")
+  gluenode.spec = gluespec
+  gluenode.next = head.next
+  gluenode.prev = head.prev
+  gluenode.next.prev = gluenode
+  gluenode.prev.next = gluenode
+  return gluenode
 end
 
 local is_alpha = function(c)
@@ -135,21 +146,59 @@ end
 
 local init_buffer = ""
 local is_initial = function(c, lang)
-  local lang = get_language(lang)
-  local allowed_initials = initials[lang] or {}
-  init_buffer = init_buffer .. c
-  if is_uppercase(c) and init_buffer == c then
-    return true --allowed_initials[init_buffer]
-  else
-    local status = allowed_initials[init_buffer]
-    if not status then 
-      --print ("Not allowed initials:".. init_buffer)
-      init_buffer = ""
-    end
-    return status
-  end
+  return is_uppercase(c)
 end
 
+local cut_off_end_chars = function(word, dot)
+  local last = string.sub(word, -1)
+  while word ~= "" and (not dot or last ~= ".") and not is_alpha(last) do
+    word = string.sub(word, 1, -2) -- remove last char
+    last = string.sub(word, -1)
+  end
+  return word
+end
+
+local part_until_non_alpha = function(word)
+  for i = 1, #word do
+    local c = word:sub(i,i)
+    if not is_alpha(c) then
+      word = string.sub(word, 1, i-1)
+      break
+    end
+  end
+  return word
+end
+
+
+function Set (list)
+  local set = {}
+  for _, l in ipairs(list) do set[l] = true end
+  return set
+end
+
+
+local presi = (require "presi")
+local si = Set (require "si")
+
+local is_unit = function(word)
+  word = part_until_non_alpha(word)
+  if si[word] then
+    return true
+  end
+  for _, prefix in pairs(presi) do
+    s, e = string.find(word, prefix)
+    if s == 1 then
+      local unit = string.sub(word, e+1)
+      if si[unit] then
+        return true
+      end
+    end
+  end
+  return false
+end
+
+local predegrees = Set (require "predegrees")
+local sufdegrees = Set (require "sufdegrees")
 
 local function prevent_single_letter (head)                                   
   local singlechars = singlechars  -- or {} 
@@ -159,17 +208,42 @@ local function prevent_single_letter (head)
   local test_fn = match_table -- singlechars and match_table or match_char
   local space = true
   local init = false
+  local anchor = head
+  local wasnumber = false
+  local word = ""
   while head do
     local id = head.id 
     local nextn = head.next
     local skip = node.has_attribute(head, luatexbase.attributes.preventsinglestatus) 
     if skip ~= 1  then 
-      if id == 10 then 
+      if id == 10 then
+        if wasnumber then
+          if word ~= "" then
+            wasnumber = false
+            word = cut_off_end_chars(word, false)
+            if is_unit(word) then
+              anchor = replace_with_thin_space(anchor)
+              insert_penalty(anchor.prev)
+            end
+          end
+        elseif tonumber(string.sub(word, -1)) ~= nil then
+          wasnumber = true
+        else
+          word = cut_off_end_chars(word, true)
+          if predegrees[word] then
+            insert_penalty(head.prev)
+          elseif sufdegrees[word] then
+            insert_penalty(anchor.prev)
+          end
+        end
         space=true
+        anchor = head
+        word = ""
         init = is_initial " " -- reset initials
       elseif space==true and id == 37 and utf_match(utf_char(head.char), alpha) then -- a letter 
         local lang = get_language(head.lang)
         local char = utf_char(head.char)
+        word = char
         init = is_initial(char,lang)
         local s = singlechars[lang] or {} -- load singlechars for node's lang
         --[[
@@ -180,15 +254,16 @@ local function prevent_single_letter (head)
         end
         --]]
         if test_fn(char, s) and nextn.id == 10 then    -- only if we are at a one letter word
-          head = insert_space(head)
+          head = insert_penalty(head)
         end                                                                       
         space = false
         -- handle initials
         -- uppercase letter followed by period (code 46)
       elseif init and head.id == 37 and head.char == 46 and nextn.id == 10 then 
-        head = insert_space(head)
+        head = insert_penalty(head)
       elseif head.id == 37 then
         local char = utf_char(head.char)
+        word = word .. char
         init = is_initial(char, head.lang)
         -- hlist support
       elseif head.id == 0 then
@@ -199,7 +274,8 @@ local function prevent_single_letter (head)
       end               
     end
     head = head.next                                                            
-  end                                                                             return  true
+  end                                                                             
+  return  true
 end               
 
 M.preventsingle = prevent_single_letter

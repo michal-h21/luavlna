@@ -22,7 +22,7 @@
 }{\medskip}
 \begin{document}
 \title{The \verb|luavlna| package}
-\author{Michal Hoftich (\url{michal.h21@gmail.com})}
+\author{Michal Hoftich (\url{michal.h21@gmail.com})\\Miro Hrončok (\url{miro@hroncok.cz})}
 \maketitle
 \tableofcontents
 \section{Introduction}
@@ -37,12 +37,14 @@ for enc\TeX, \verb!xevlna! for Xe\TeX,
 %lua\TeX and for lua\LaTeX.
 
 Other feature of this package is including of non-breakable space after 
-initials, like in personal names. 
+initials, like in personal names, after or before academic degrees
+and between numbers and units (SI and others).
 
 The code is modified version of Patrick Gundlach's answer on
 TeX.sx\footnote{\url{http://tex.stackexchange.com/a/28128/2891}}.
 The difference is that it is possible to specify which single letters
 should be taken into account for different languages.
+The support for degrees and units was added as well.
 % The code works also for single letters at the beginning of the brackets.
 
 
@@ -74,7 +76,9 @@ Co třeba í znaky š diakritikou?
 
 Různé možnosti [v závorkách <i jiných znacích
 
-Podpora iniciál: G. F. Hegel, Č. Zíbrt
+Podpora iniciál a titulů: M. J. Hegel, Ing. Běháková, Ph.D., Ž. Zíbrt.
+
+Podpora jednotek: 100,5 MN\cdot{}s, 100.5 kJ, 200 µA, $-1$ dag, 12 MiB, 1 m$^3$/s.
 
 \preventsingledebugoff
 \bye
@@ -95,7 +99,9 @@ Co třeba í znaky š diakritikou?
 
 Různé možnosti [v závorkách \textless i jiných znacích
 
-Podpora iniciál: G. F. Hegel, Č. Zíbrt
+Podpora iniciál a titulů: M. J. Hegel, Ing. Běháková, Ph.D., Ž. Zíbrt.
+
+Podpora jednotek: 100,5 MN\cdot{}s, 100.5 kJ, 200 µA, $-1$ dag, 12 MiB, 1 m$^3$/s.
 
 \preventsingledebugoff
 %}
