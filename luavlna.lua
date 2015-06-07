@@ -283,5 +283,9 @@ M.singlechars = set_singlechars
 M.initials    = set_initials
 M.set_tex4ht  = set_tex4ht
 M.debug = set_debug
+M.predegrees = predegrees
+M.sufdegrees = sufdegrees
+M.presi = presi
+M.si = si
 M.set_main_language = set_main_language
 return M
