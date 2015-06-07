@@ -177,8 +177,8 @@ function Set (list)
 end
 
 
-local presi = (require "presi")
-local si = Set (require "si")
+local presi = (require "luavlna.presi")
+local si = Set(require "luavlna.si")
 
 local is_unit = function(word)
   word = part_until_non_alpha(word)
@@ -197,8 +197,8 @@ local is_unit = function(word)
   return false
 end
 
-local predegrees = Set (require "predegrees")
-local sufdegrees = Set (require "sufdegrees")
+local predegrees = Set (require "luavlna.predegrees")
+local sufdegrees = Set (require "luavlna.sufdegrees")
 
 local function prevent_single_letter (head)                                   
   local singlechars = singlechars  -- or {} 
