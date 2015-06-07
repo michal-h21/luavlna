@@ -98,7 +98,7 @@ local set_tex4ht = function()
   tex4ht = true
 end
 
-local insert_space = function(head)
+local insert_penalty = function(head)
   local p = node.new("penalty")                                           
   p.penalty = 10000                                                       
   local debug = debug or false
@@ -108,6 +108,18 @@ local insert_space = function(head)
     node.insert_after(head,head,p) 
   end
   return head
+end
+
+local replace_with_thin_space = function(head)
+  local gluenode = node.new(node.id("glue"))
+  local gluespec = node.new(node.id("glue_spec"))
+  gluespec.width = tex.sp("0.2em")
+  gluenode.spec = gluespec
+  gluenode.next = head.next
+  gluenode.prev = head.prev
+  gluenode.next.prev = gluenode
+  gluenode.prev.next = gluenode
+  return gluenode
 end
 
 local is_alpha = function(c)
@@ -210,7 +222,8 @@ local function prevent_single_letter (head)
             wasnumber = false
             word = cut_off_end_chars(word, false)
             if is_unit(word) then
-              insert_space(anchor.prev)
+              anchor = replace_with_thin_space(anchor)
+              insert_penalty(anchor.prev)
             end
           end
         elseif tonumber(string.sub(word, -1)) ~= nil then
@@ -218,9 +231,9 @@ local function prevent_single_letter (head)
         else
           word = cut_off_end_chars(word, true)
           if predegrees[word] then
-            insert_space(head.prev)
+            insert_penalty(head.prev)
           elseif sufdegrees[word] then
-            insert_space(anchor.prev)
+            insert_penalty(anchor.prev)
           end
         end
         space=true
@@ -241,13 +254,13 @@ local function prevent_single_letter (head)
         end
         --]]
         if test_fn(char, s) and nextn.id == 10 then    -- only if we are at a one letter word
-          head = insert_space(head)
+          head = insert_penalty(head)
         end                                                                       
         space = false
         -- handle initials
         -- uppercase letter followed by period (code 46)
       elseif init and head.id == 37 and head.char == 46 and nextn.id == 10 then 
-        head = insert_space(head)
+        head = insert_penalty(head)
       elseif head.id == 37 then
         local char = utf_char(head.char)
         word = word .. char
