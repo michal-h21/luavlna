@@ -39,7 +39,7 @@ local load_lang_dat = function()
     return nil, "Cannot load file language.dat"
   end
   local f = io.open(lang_dat, "r")
-  local i = 0
+  local i = 1
   local numlang = {} -- return language name 
   local langnum = {} -- return language number
   for line in f:lines() do
