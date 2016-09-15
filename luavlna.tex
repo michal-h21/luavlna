@@ -13,7 +13,10 @@ local languages = langno.load_languages()
 set_singlechars = function(lang,chars)
   local utf_gmatch = unicode.utf8.gmatch
   % local langnumbers = languages.names
-  local langid = languages:get_number(lang)
+  local langid = lang 
+  if not tonumber(lang) then
+    langid = languages:get_number(lang)
+  end
   if not langid then return nil, "Cannot find language number for: "..lang end
   local chars = chars  or ""
   local singlechars = {}
