@@ -32,14 +32,14 @@ end
 
 
 -- default language loader, language.dat file is parsed
-local load_lang_dat = function()
+local load_lang_dat = function(start)
   -- languages are saved in the file language.dat
   local lang_dat = kpse.find_file("language.dat")
   if not lang_dat then 
     return nil, "Cannot load file language.dat"
   end
   local f = io.open(lang_dat, "r")
-  local i = 1
+  local i = start or 0
   local numlang = {} -- return language name 
   local langnum = {} -- return language number
   for line in f:lines() do
@@ -55,6 +55,10 @@ local load_lang_dat = function()
     end
   end
   return lang_obj(langnum, numlang)--{numbers = numlang, names = langnum}
+end
+
+local load_lang_dat_lualatex = function()
+  return load_lang_dat(1)
 end
 
 local load_csplain= function()
@@ -76,6 +80,7 @@ end
 -- because different formats may use different ways to load languages
 -- driver mechanism is provided.  
 local drivers = {}
+drivers["lualatex"] = load_lang_dat_lualatex
 drivers["luatex"]  = load_lang_dat
 drivers["default"] = load_lang_dat
 drivers["csplain"] = load_csplain
