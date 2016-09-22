@@ -84,6 +84,13 @@ end
 \def\preventsingledebugoff{%
 \directlua{luavlna.debug(false)}
 }
+
+% disable processing of units or degrees
+
+\def\nopredegrees{\directlua{luavlna.no_predegrees = true}}
+\def\nosufdegrees{\directlua{luavlna.no_sufdegrees = true}}
+\def\nounits{\directlua{luavlna.no_unit = true}}
+
 \ifdefined\nosingledefaults\else
   \singlechars{czech}{AIiVvOoUuSsZzKk}
   \singlechars{slovak}{AIiVvOoUuSsZzKk}
