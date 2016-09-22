@@ -188,7 +188,7 @@ local presi = (require "luavlna.presi")
 local si = Set(require "luavlna.si")
 
 local is_unit = function(word)
-  if M.no_unit then return false end
+  if M.no_unit==true then return false end
   word = part_until_non_alpha(word)
   if si[word] then
     return true
@@ -240,9 +240,9 @@ local function prevent_single_letter (head)
           wasnumber = true
         else
           word = cut_off_end_chars(word, true)
-          if no_predegrees ~= false and predegrees[word] then
+          if no_predegrees ~= true and predegrees[word] then
             insert_penalty(head.prev)
-          elseif no_sufdegrees ~= false and sufdegrees[word] then
+          elseif no_sufdegrees ~= true and sufdegrees[word] then
             insert_penalty(anchor.prev)
           end
         end
