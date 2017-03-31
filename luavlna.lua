@@ -13,6 +13,7 @@ local glue_id  = node.id "glue"
 local glyph_id = node.id "glyph"
 local hlist_id = node.id "hlist"
 local vlist_id = node.id "vlist"
+local math_id  = node.id "math"
 local period_char = string.byte(".")
 
 local alpha = string.char(37).."a" -- alpha class, entering 
@@ -221,11 +222,19 @@ local function prevent_single_letter (head)
   local word = ""
   local no_predegrees = M.no_predegrees
   local no_sufdegrees = M.no_sufdegrees
+  local in_math = false
   while head do
     local id = head.id 
     local nextn = head.next
     local skip = node.has_attribute(head, luatexbase.attributes.preventsinglestatus) 
-    if skip ~= 1  then 
+    if id == math_id then
+      if head.subtype == 0 then
+        in_math = true
+      else
+        in_math = false
+      end
+    end
+    if skip ~= 1 and not in_math  then 
       if id == glue_id then
         if wasnumber then
           if word ~= "" then
