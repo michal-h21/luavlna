@@ -8,6 +8,7 @@
 local M = {}
 local utf_match = unicode.utf8.match
 local utf_char  = unicode.utf8.char
+local utf_len   = unicode.utf8.len
 
 local glue_id  = node.id "glue"
 local glyph_id = node.id "glyph"
@@ -278,7 +279,7 @@ local function prevent_single_letter (head)
         space = false
         -- handle initials
         -- uppercase letter followed by period (code 46)
-      elseif init and head.id == glyph_id and head.char == period_char and nextn.id == glue_id then 
+      elseif init and head.id == glyph_id and head.char == period_char and nextn.id == glue_id and utf_len(word) == 1 then 
         head = insert_penalty(head)
       elseif head.id == glyph_id then
         local char = utf_char(head.char)
