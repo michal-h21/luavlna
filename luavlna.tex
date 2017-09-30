@@ -1,4 +1,9 @@
-\input luatexbase.sty
+% detect LaTeX and use the correct method for luatexbase inclusion
+\ifx\RequirePackage\undefined
+  \input{luatexbase.sty}%
+\else
+  \RequirePackage{luatexbase}
+\fi
 
 \newluatexattribute\preventsinglestatus
 % Modify pre_linebreak_filter callback so the spaces can be inserted
