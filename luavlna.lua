@@ -8,6 +8,15 @@
 local M = {}
 local utf_match = unicode.utf8.match
 local utf_char  = unicode.utf8.char
+local utf_len   = unicode.utf8.len
+
+local glue_id  = node.id "glue"
+local glyph_id = node.id "glyph"
+local hlist_id = node.id "hlist"
+local vlist_id = node.id "vlist"
+local math_id  = node.id "math"
+local period_char = string.byte(".")
+
 local alpha = string.char(37).."a" -- alpha class, entering 
 -- percent char directly caused error
 local alphas = {}
@@ -113,8 +122,8 @@ end
 local replace_with_thin_space = function(head)
   local gluenode = node.new(node.id("glue"))
   local gluespec = node.new(node.id("glue_spec"))
-  gluespec.width = tex.sp("0.2em")
-  gluenode.spec = gluespec
+  gluenode.width = tex.sp("0.2em")
+  -- gluenode.spec = gluespec
   gluenode.next = head.next
   gluenode.prev = head.prev
   gluenode.next.prev = gluenode
@@ -181,6 +190,7 @@ local presi = (require "luavlna.presi")
 local si = Set(require "luavlna.si")
 
 local is_unit = function(word)
+  if M.no_unit==true then return false end
   word = part_until_non_alpha(word)
   if si[word] then
     return true
@@ -211,12 +221,22 @@ local function prevent_single_letter (head)
   local anchor = head
   local wasnumber = false
   local word = ""
+  local no_predegrees = M.no_predegrees
+  local no_sufdegrees = M.no_sufdegrees
+  local in_math = false
   while head do
     local id = head.id 
     local nextn = head.next
     local skip = node.has_attribute(head, luatexbase.attributes.preventsinglestatus) 
-    if skip ~= 1  then 
-      if id == 10 then
+    if id == math_id then
+      if head.subtype == 0 then
+        in_math = true
+      else
+        in_math = false
+      end
+    end
+    if skip ~= 1 and not in_math  then 
+      if id == glue_id then
         if wasnumber then
           if word ~= "" then
             wasnumber = false
@@ -230,9 +250,9 @@ local function prevent_single_letter (head)
           wasnumber = true
         else
           word = cut_off_end_chars(word, true)
-          if predegrees[word] then
+          if no_predegrees ~= true and predegrees[word] then
             insert_penalty(head.prev)
-          elseif sufdegrees[word] then
+          elseif no_sufdegrees ~= true and sufdegrees[word] then
             insert_penalty(anchor.prev)
           end
         end
@@ -240,7 +260,7 @@ local function prevent_single_letter (head)
         anchor = head
         word = ""
         init = is_initial " " -- reset initials
-      elseif space==true and id == 37 and utf_match(utf_char(head.char), alpha) then -- a letter 
+      elseif space==true and id == glyph_id and utf_match(utf_char(head.char), alpha) then -- a letter 
         local lang = get_language(head.lang)
         local char = utf_char(head.char)
         word = char
@@ -253,23 +273,23 @@ local function prevent_single_letter (head)
         end
         end
         --]]
-        if test_fn(char, s) and nextn.id == 10 then    -- only if we are at a one letter word
+        if test_fn(char, s) and nextn.id == glue_id then    -- only if we are at a one letter word
           head = insert_penalty(head)
         end                                                                       
         space = false
         -- handle initials
         -- uppercase letter followed by period (code 46)
-      elseif init and head.id == 37 and head.char == 46 and nextn.id == 10 then 
+      elseif init and head.id == glyph_id and head.char == period_char and nextn.id == glue_id and utf_len(word) == 1 then 
         head = insert_penalty(head)
-      elseif head.id == 37 then
+      elseif head.id == glyph_id then
         local char = utf_char(head.char)
         word = word .. char
         init = is_initial(char, head.lang)
         -- hlist support
-      elseif head.id == 0 then
+      elseif head.id == hlist_id then
         prevent_single_letter(head.head)
         -- vlist support
-      elseif head.id == 1 then
+      elseif head.id == vlist_id then
         prevent_single_letter(head.head)
       end               
     end

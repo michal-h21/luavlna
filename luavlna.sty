@@ -1,5 +1,24 @@
 \ProvidesPackage{luavlna}[2014/01/14 luavlna]
 
+\def\nosingledefaults{\relax}
 \input luavlna 
 
+\def\singlechars#1#2{%
+  \ifcsname l@#1\endcsname%
+    \expandafter\directlua\expandafter{set_singlechars("\the\csname l@#1\endcsname","#2")}%
+  \fi%
+}
+
+% Define compound initials
+\def\compoundinitials#1#2{%
+  \ifcsname l@#1\endcsname%
+    \expandafter\directlua\expandafter{set_compounds("\the\csname l@#1\endcsname","#2")}%
+  \fi%
+}
+
+\AtBeginDocument{%
+  \singlechars{czech}{AIiVvOoUuSsZzKk}
+  \singlechars{slovak}{AIiVvOoUuSsZzKk}
+  \compoundinitials{czech}{Ch,CH}
+}
 \endinput
