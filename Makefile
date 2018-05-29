@@ -5,6 +5,8 @@ BUILD_LUAVLNA = $(BUILD_DIR)/$(PACKAGE_NAME)
 LUA_DIR = $(PACKAGE_NAME)
 DOC_FILE = luavlna-doc.pdf
 DOC_SOURCE = luavlna-doc.tex
+README = README.md
+DIST_FILE = $(PACKAGE_NAME).zip
 
 VERSION:= undefined
 DATE:= undefined
@@ -30,4 +32,7 @@ build: $(DOC_FILE)
 	@mkdir -p $(BUILD_LUAVLNA)
 	@mkdir -p $(BUILD_LUAVLNA)/$(LUA_DIR)
 	@# copy system files to the build dir, excluding Makefile
-	cp --parents `git ls-tree --full-tree -r --name-only HEAD | grep -v Makefile` $(BUILD_LUAVLNA)
+	@cp --parents `git ls-tree --full-tree -r --name-only HEAD | grep -v Makefile` $(BUILD_LUAVLNA)
+	@sed -e "s/{{version}}/${VERSION}/" < $(README) | sed -e "s/{{date}}/$(DATE)/" > $(BUILD_LUAVLNA)/$(README)
+	@cd $(BUILD_DIR) && zip -r $(DIST_FILE) $(PACKAGE_NAME)
+
