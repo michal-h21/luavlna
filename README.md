@@ -1,10 +1,10 @@
 # Introduction
 
-This is a small package for plain luaTeX and luaLaTeX. In some languages,
+`Luavlna` is a small package for plain LuaTeX and LuaLaTeX. In some languages,
 like Czech or Polish, there should be no single letter words at the
 line end, according to the typographical norms. There exists some
 external commands (like `vlna`) or packages (`encxvlna` for encTeX,
-`xevlna` for XeTeX, `impnattypo` for luaLaTeX).
+`xevlna` for XeTeX, `impnattypo` for LuaLaTeX).
 
 Other feature of this package is including of non-breakable space after initials,
 like in personal names, after or before academic degrees
@@ -25,7 +25,7 @@ The usage is simple:
     %% in the case of luacsplain, use instead:
     %% \chyph
     %% but language code for Czech is different than in LaTeX or normal 
-    %% luaTeX, so you will need to set single letters with somethinh like:
+    %% LuaTeX, so you will need to set single letters with somethinh like:
     %% \singlechars{5}{AIiVvOoUuSsZzKk}
     \input luavlna
     \preventsingledebugon
