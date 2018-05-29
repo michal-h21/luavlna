@@ -153,6 +153,10 @@ local is_uppercase= function(c)
   return status
 end
 
+local is_number = function(word)
+  return tonumber(string.sub(word, -1)) ~= nil
+end
+
 local init_buffer = ""
 local is_initial = function(c, lang)
   return is_uppercase(c)
@@ -230,9 +234,12 @@ local function prevent_single_letter (head)
     local skip = node.has_attribute(head, luatexbase.attributes.preventsinglestatus) 
     if id == math_id then
       if head.subtype == 0 then
+        word = ""
         in_math = true
       else
         in_math = false
+        if is_number(word) then wasnumber = true end
+        word = ""
       end
     end
     if skip ~= 1 and not in_math  then 
@@ -246,7 +253,7 @@ local function prevent_single_letter (head)
               insert_penalty(anchor.prev)
             end
           end
-        elseif tonumber(string.sub(word, -1)) ~= nil then
+        elseif is_number(word) then
           wasnumber = true
         else
           word = cut_off_end_chars(word, true)
@@ -292,7 +299,8 @@ local function prevent_single_letter (head)
       elseif head.id == vlist_id then
         prevent_single_letter(head.head)
       end              
-    elseif head.id == glyph_id and in_math then
+    elseif id == glyph_id and in_math then
+      word = word .. utf_char(head.char)
     end
     head = head.next                                                            
   end                                                                             
