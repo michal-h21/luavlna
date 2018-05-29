@@ -112,8 +112,6 @@ Miro Hrončok
 
 # License
 
-## License
-
 Permission is granted to copy, distribute and/or modify this software
 under the terms of the LaTeX Project Public License, version 1.3.
 
