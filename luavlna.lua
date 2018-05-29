@@ -260,7 +260,7 @@ local function prevent_single_letter (head)
         anchor = head
         word = ""
         init = is_initial " " -- reset initials
-      elseif space==true and id == glyph_id and utf_match(utf_char(head.char), alpha) then -- a letter 
+      elseif space==true and id == glyph_id and is_alpha(utf_char(head.char)) then -- a letter 
         local lang = get_language(head.lang)
         local char = utf_char(head.char)
         word = char
@@ -291,7 +291,8 @@ local function prevent_single_letter (head)
         -- vlist support
       elseif head.id == vlist_id then
         prevent_single_letter(head.head)
-      end               
+      end              
+    elseif head.id == glyph_id and in_math then
     end
     head = head.next                                                            
   end                                                                             
