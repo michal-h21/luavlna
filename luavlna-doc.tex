@@ -21,20 +21,27 @@
 	\medskip%
 	\parindent=0pt%
 }{\medskip}
+
+\ifdefined\version\else
+  \def\version{{{VERSION}}}
+  \let\gitdate\date
+\fi
+
 \begin{document}
 \title{The \verb|luavlna| package}
 \author{Michal Hoftich (\url{michal.h21@gmail.com})\\Miro Hrončok (\url{miro@hroncok.cz})}
+\date{Version \version\\\gitdate}
 \maketitle
 \tableofcontents
 \section{Introduction}
 
 
-This is a small package for plain lua\TeX and lua\LaTeX. In some languages, like
+This is a small package for plain Lua\TeX and Lua\LaTeX. In some languages, like
 Czech or Polish, there should be no single letter words at the line
 end, according to the typographical norms. There exists some
 external commands (like \verb!vlna!) or packages (\verb!encxvlna!
 for enc\TeX, \verb!xevlna! for Xe\TeX,
-\verb!impnattypo! for lua\LaTeX). %This package is for plain
+\verb!impnattypo! for Lua\LaTeX). %This package is for plain
 %lua\TeX and for lua\LaTeX.
 
 Other feature of this package is including of non-breakable space after 
@@ -114,7 +121,7 @@ Uvnitř matematiky by mělo být zpracování vypnuté:  $k \in \mathbb N$. Pokr
 
 \selectlanguage{english}
 \bigskip
-It is also possible to use the package with lua\LaTeX, just use
+It is also possible to use the package with Lua\LaTeX, just use
 
 \begin{verbatim}
 	\usepackage{luavlna}
@@ -203,22 +210,22 @@ Insert debugging marks on/off. Default off.
 
 \section{Lua module \texttt{langno.lua}}
 
-When we process glyph nodes with lua\TeX\ callbacks, there are \verb|lang| 
+When we process glyph nodes with Lua\TeX\ callbacks, there are \verb|lang| 
 fields available. These are numerical codes of languages, but no information
-about language names easily accesible from lua side is available.\footnote{%
+about language names easily accesible from Lua side is available.\footnote{%
 	Language names are stored in \TeX macros like \verb|\string\l@langname|, but 
 	different formats use different naming of these macros}
 These numbers are format dependent, majority of formats like 
-lua\LaTeX use \verb|language.dat| file provided by \verb|babel| 
+Lua\LaTeX use \verb|language.dat| file provided by \verb|babel| 
 for assign numbers to languages, but for example \verb|csplain| 
 use its own system.
 
 To allow easy setting of language dependent parameters, \verb|langno| module 
 was created. It's purpose is to translate language code to language name and 
-the other way. lua\LaTeX, lua\TeX\ and CSplain formats are supported at the moment.
+the other way. Lua\LaTeX, Lua\TeX\ and CSplain formats are supported at the moment.
 
 \subsection{Recognized languages}
-\subsubsection{lua\TeX\ and lua\LaTeX}
+\subsubsection{Lua\TeX\ and Lua\LaTeX}
 
 File \verb|language.dat| is processed to load language names, aliases and assigned numbers. These language names are the same as supported by \verb|babel| package.
 
@@ -253,3 +260,8 @@ standard English language names.
   \end{luacode*}
 \end{quotation}
 \end{document}
+\section{License}
+
+Permission is granted to copy, distribute and/or modify this software
+under the terms of the LaTeX Project Public License, version 1.3.
+
