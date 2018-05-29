@@ -6,6 +6,7 @@ return {
   "C",
   "°C",
   "cd",
+  "dag",
   "eV",
   "F",
   "°F",
