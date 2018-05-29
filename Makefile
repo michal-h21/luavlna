@@ -1,6 +1,8 @@
 PACKAGE_NAME = luavlna
 BUILD_DIR = build
 BUILD_LUAVLNA = $(BUILD_DIR)/$(PACKAGE_NAME)
+# There must be also subdirectory for Lua files
+LUA_DIR = $(PACKAGE_NAME)
 
 VERSION:= undefined
 DATE:= undefined
@@ -15,4 +17,6 @@ endif
 build:
 	@rm -rf $(BUILD_DIR)
 	@mkdir -p $(BUILD_LUAVLNA)
-	rsync `git ls-tree --full-tree -r --name-only HEAD | grep -v Makefile` $(BUILD_LUAVLNA)
+	@mkdir -p $(BUILD_LUAVLNA)/$(LUA_DIR)
+	@# copy system files to the build dir, excluding Makefile
+	cp --parents `git ls-tree --full-tree -r --name-only HEAD | grep -v Makefile` $(BUILD_LUAVLNA)
