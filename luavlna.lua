@@ -280,7 +280,7 @@ local function prevent_single_letter (head)
         end
         end
         --]]
-        if test_fn(char, s) and nextn.id == glue_id then    -- only if we are at a one letter word
+        if test_fn(char, s) and nextn ~= nil and nextn.id == glue_id then    -- only if we are at a one letter word
           head = insert_penalty(head)
         end                                                                       
         space = false
