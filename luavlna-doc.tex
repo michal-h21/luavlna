@@ -208,7 +208,7 @@ You can also disable units and degrees processing:
 
 Insert debugging marks on/off. Default off.
 
-\section{Lua module \texttt{langno.lua}}
+\section{Lua module \texttt{luavlna-langno.lua}}
 
 When we process glyph nodes with Lua\TeX\ callbacks, there are \verb|lang| 
 fields available. These are numerical codes of languages, but no information
@@ -232,7 +232,7 @@ File \verb|language.dat| is processed to load language names, aliases and assign
 \begin{quotation}
   \small\noindent
 \begin{luacode*}
-  langno = require "langno"
+  langno = require "luavlna-langno"
   function print_format_lang(fmt)
     local luatex = langno.load_languages(fmt)
     local t = {}
