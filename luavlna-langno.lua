@@ -62,7 +62,7 @@ local load_lang_dat_lualatex = function()
 end
 
 local load_csplain= function()
-	local l = require "csplain-langs"
+	local l = require "luavlna-csplain-langs"
 	local langnum = {}
 	local numlang = {}
 	for k, v in pairs(l) do

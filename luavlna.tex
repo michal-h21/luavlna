@@ -9,7 +9,7 @@
 % Modify pre_linebreak_filter callback so the spaces can be inserted
 \directlua{%         
 luavlna = require "luavlna" 
-langno  = require "langno"
+langno  = require "luavlna-langno"
 luatexbase.add_to_callback("pre_linebreak_filter", luavlna.preventsingle," ")
 
 local languages = langno.load_languages()

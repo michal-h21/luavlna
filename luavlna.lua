@@ -190,8 +190,8 @@ function Set (list)
 end
 
 
-local presi = (require "luavlna.presi")
-local si = Set(require "luavlna.si")
+local presi = (require "luavlna-presi")
+local si = Set(require "luavlna-si")
 
 local is_unit = function(word)
   if M.no_unit==true then return false end
@@ -211,8 +211,8 @@ local is_unit = function(word)
   return false
 end
 
-local predegrees = Set (require "luavlna.predegrees")
-local sufdegrees = Set (require "luavlna.sufdegrees")
+local predegrees = Set (require "luavlna-predegrees")
+local sufdegrees = Set (require "luavlna-sufdegrees")
 
 local function prevent_single_letter (head)                                   
   local singlechars = singlechars  -- or {} 
