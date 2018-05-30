@@ -30,7 +30,6 @@ $(DOC_FILE): $(DOC_SOURCE)
 build: $(DOC_FILE)
 	@rm -rf $(BUILD_DIR)
 	@mkdir -p $(BUILD_LUAVLNA)
-	@mkdir -p $(BUILD_LUAVLNA)/$(LUA_DIR)
 	@# copy system files to the build dir, excluding Makefile
 	@cp --parents `git ls-tree --full-tree -r --name-only HEAD | grep -v Makefile` $(BUILD_LUAVLNA)
 	@sed -e "s/{{version}}/${VERSION}/" < $(README) | sed -e "s/{{date}}/$(DATE)/" > $(BUILD_LUAVLNA)/$(README)
