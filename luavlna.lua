@@ -231,7 +231,8 @@ local function prevent_single_letter (head)
   while head do
     local id = head.id 
     local nextn = head.next
-    local skip = node.has_attribute(head, luatexbase.attributes.preventsinglestatus) 
+    -- local skip = node.has_attribute(head, luatexbase.attributes.preventsinglestatus) 
+    local skip = node.has_attribute(head, M.preventsingleid)
     if id == math_id then
       if head.subtype == 0 then
         word = ""

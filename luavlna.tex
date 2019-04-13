@@ -86,6 +86,9 @@ end
 	\directlua{set_main_language("#1")}
 } 
 
+%\newluatexattribute\preventsinglestatus
+\attributedef\preventsinglestatus=\directlua{tex.print(luavlna.preventsingleid)} % just a random number
+
 \def\preventsingleon{%
 	\preventsinglestatus=2
 }
