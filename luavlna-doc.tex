@@ -227,7 +227,7 @@ the other way. Lua\LaTeX, Lua\TeX\ and CSplain formats are supported at the mome
 \subsection{Recognized languages}
 \subsubsection{Lua\TeX\ and Lua\LaTeX}
 
-File \verb|language.dat| is processed to load language names, aliases and assigned numbers. These language names are the same as supported by \verb|babel| package.
+File \verb|language.dat| is processed to load language names, aliases and assigned numbers. These language names are the same as names supported by the \verb|babel| package.
 
 \begin{quotation}
   \small\noindent
@@ -248,10 +248,7 @@ File \verb|language.dat| is processed to load language names, aliases and assign
 
 \subsubsection{CSplain}
 
-Different method is used. File \verb|hyphen.lan| is included in CSplain, where 
-language numbers are assigned to ISO-639-1 or ISO-639-2 language codes. 
-These language codes were then normalized to names used vy \verb|babel|, or 
-standard English language names.
+Different method is used with the CSplain format. The \verb|lua-hyphen.lan| file is parsed for the language codes.
 
 \begin{quotation}
   \small\noindent
