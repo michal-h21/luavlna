@@ -18,13 +18,13 @@ endif
 
 .PHONY: build
 
-doc: $(DOC_FILE)
+doc: $(DOC_FILE) 
 
 ifeq ($(strip $(shell git rev-parse --is-inside-work-tree 2>/dev/null)),true)
 	git fetch --tags
 endif
 
-$(DOC_FILE): $(DOC_SOURCE)
+$(DOC_FILE): $(DOC_SOURCE) *.lua  *.tex luavlna.sty
 	latexmk -pdf -pdflatex='lualatex "\def\version{${VERSION}}\def\gitdate{${DATE}}\input{%S}"' $(DOC_SOURCE)
 
 build: $(DOC_FILE)
