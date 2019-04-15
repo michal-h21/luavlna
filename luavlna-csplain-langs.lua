@@ -1,7 +1,10 @@
 local languages = {}
 local function parse_language_lan(content)
   for name,  id in content:gmatch("preplang%s+.-%s+(.-)%s+.-%s(.-)%s+") do
-    languages[name] = id
+    -- skip invalid languages
+    if not name:match("%#") then
+      languages[name] = id
+    end
   end
 end
 
