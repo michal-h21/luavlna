@@ -67,7 +67,6 @@ local load_csplain= function()
 	local numlang = {}
 	for k, v in pairs(l) do
 		local first = k:gsub(" *;.*","")
-		--print(first)
 		langnum[first] = v
 		for _,i in ipairs(v) do
 			numlang[i] = first
@@ -85,7 +84,7 @@ drivers["luatex"]  = load_lang_dat
 drivers["default"] = load_lang_dat
 drivers["csplain"] = load_csplain
 drivers["pdfcsplain"] = load_csplain
-drivers["luaplain"] = load_csplain
+drivers["luacsplain"] = load_csplain
 
 local load_languages = function(name)
   local name = name or format
