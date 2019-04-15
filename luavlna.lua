@@ -47,15 +47,12 @@ local tex4ht = false
 -- must be table in the {char = true, char2=true} form
 local set_singlechars= function(lang,c)
   --print("Set single chars lua")
-  print(type(lang), lang)
   if type(lang) == "table" then
     for _,l in pairs(lang) do
-      print("language: ",l)
       singlechars[l] = c
     end
   else
     local lang = tonumber(lang)
-    print("language: ",lang)
     -- for k,_ in pairs(c) do print(k) end
     singlechars[lang] = c
   end
