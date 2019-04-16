@@ -4,7 +4,7 @@ luavlna = require "luavlna"
 langno  = require "luavlna-langno"
 
 require "ltluatex"
-luatexbase.add_to_callback("pre_linebreak_filter", luavlna.preventsingle," ")
+luatexbase.add_to_callback("pre_linebreak_filter", luavlna.preventsingle,"LuaVlna")
 % -- define the attribute number
 luavlna.preventsingleid = math.random(2^16)
 
