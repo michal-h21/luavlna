@@ -5,6 +5,7 @@ langno  = require "luavlna-langno"
 
 require "ltluatex"
 luatexbase.add_to_callback("pre_linebreak_filter", luavlna.preventsingle,"LuaVlna")
+luatexbase.add_to_callback("hyphenate", luavlna.split_hyphens, "allow hyphen breaks")
 % -- define the attribute number
 luavlna.preventsingleid = math.random(2^16)
 
@@ -54,6 +55,12 @@ set_main_language = function(lang)
   if not langid then return nil, "Cannot find language number for: "..lang end
   luavlna.set_main_language(langid)
 end	
+
+enable_split_hyphens = function(lang)
+  local langid = languages:get_number(lang)
+  if not langid then return nil, "Cannot find language number for: "..lang end
+  luavlna.split_hyphen_langs[langid] = true
+end
 }     
 
 % Set letters which are prevented from breaking
@@ -89,6 +96,10 @@ end
 \directlua{luavlna.debug(false)}
 }
 
+% enable split hyphens for a language
+
+\def\enablesplithyphens#1{\directlua{enable_split_hyphens("#1")}}
+
 % disable processing of units or degrees
 
 \def\nopredegrees{\directlua{luavlna.no_predegrees = true}}
@@ -99,5 +110,6 @@ end
   \singlechars{czech}{AIiVvOoUuSsZzKk}
   \singlechars{slovak}{AIiVvOoUuSsZzKk}
   \compoundinitials{czech}{Ch,CH}
+  \enablesplithyphens{czech}
 \fi
 

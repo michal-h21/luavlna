@@ -305,10 +305,50 @@ local function prevent_single_letter (head)
   return  true
 end               
 
+-- Enable hyphenation of words that contain hyphens
+-- and repeating of the explicit hyphen on a new line when
+-- the hyphen is hyphenated
+-- It should be used in the `hyphenate` callback
+-- based on ShreewatsaR's code from:
+-- https://tex.stackexchange.com/a/417883/2891
+local hyphenate_langs = {}
+local break_hyphens = function(head, tail)
+    local hyphenchar = string.byte("-")
+    local glyph_id = node.id("glyph")
+    local n = head
+    while n do
+       if n.id == glyph_id and hyphenate_langs[n.lang] and n.char == hyphenchar then
+          -- Insert an infinite penalty before, and a zero-width glue node after, the hyphen.
+          -- Like writing "\nobreak-\hspace{0pt}" or equivalently "\penalty10000-\hskip0pt"
+         local p = node.new(node.id('penalty'))
+         p.penalty = 10000
+         head, p = node.insert_before(head, n, p)
+         local g = node.new(node.id('glue'))
+         head, g = node.insert_after(head, n, g)
+         -- insert the discretionary
+         local disc = node.new("disc")
+         disc.penalty = tex.hyphenpenalty
+         disc.subtype = 2
+         disc.pre = node.copy(n)
+         disc.post = node.copy(n)
+         disc.replace = node.copy(n)
+         node.insert_before(head, g, disc)
+         -- insert another penalty
+         node.insert_before(head, g, node.copy(p))
+         node.remove(head,n)
+         n = g
+       end
+       n = n.next
+    end
+   lang.hyphenate(head, tail)
+end
+
 M.preventsingle = prevent_single_letter
 M.singlechars = set_singlechars
 M.initials    = set_initials
 M.set_tex4ht  = set_tex4ht
 M.debug = set_debug
 M.set_main_language = set_main_language
+M.split_hyphen_langs = hyphenate_langs
+M.split_hyphens = break_hyphens
 return M
