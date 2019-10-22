@@ -44,7 +44,7 @@ for enc\TeX, \verb!xevlna! for Xe\TeX,
 \verb!impnattypo! for Lua\LaTeX). %This package is for plain
 %lua\TeX and for lua\LaTeX.
 
-Other feature of this package is including of non-breakable space after 
+Another feature is inclusion of a non-breakable space after 
 initials, like in personal names, after or before academic degrees
 and between numbers and units (SI and others).
 
@@ -52,8 +52,9 @@ The code is modified version of Patrick Gundlach's answer on
 TeX.sx\footnote{\url{http://tex.stackexchange.com/a/28128/2891}}.
 The difference is that it is possible to specify which single letters
 should be taken into account for different languages.
-The support for degrees and units was added as well.
+% The support for degrees and units was added as well.
 % The code works also for single letters at the beginning of the brackets.
+
 
 
 \section{Usage}
@@ -168,6 +169,35 @@ Default values:
 \compoundinitials{czech}{Ch,CH}
 \end{verbatim}
 \end{mycode}
+
+
+\subsection{Split hyphens}
+
+The hyphenated words like ``je-li'' should be be hyphenated as ``je-/-li``
+according to the Czech typesseting rules. This behavior can be enabled or disabled for a particular
+language using the following commands:
+
+\begin{mycode}
+  \cmd{\enablesplithyphens}\marg{language name}\\
+  \cmd{\disablesplithyphens}\marg{language name}
+\end{mycode}
+
+By default, it is enabled for the Czech language.
+
+Example in action:
+
+\begin{minipage}{3in}
+  \selectlanguage{czech}
+   Sedlec-Prčice, modro-zelený,  překladatel-tlumočník, kuchař-číšník, propan-butan,                                                                                          
+   Otýlie Sklenářová-Malá, František Jílek-Oberpfalcer.
+  \selectlanguage{english}
+\end{minipage}
+
+The similar behaviour can be achieved using the \verb|\splithyphens|  command
+provided by Czech langauge definitions for the Babel package, but it's use is
+discouraged. It prevents use ot the hyphen character in many situations. The
+solution provided by Luavlna should be safe.
+
 
 \subsection{Turning off language switching}
 
