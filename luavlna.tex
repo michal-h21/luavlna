@@ -61,6 +61,12 @@ enable_split_hyphens = function(lang)
   if not langid then return nil, "Cannot find language number for: "..lang end
   luavlna.split_hyphen_langs[langid] = true
 end
+
+disable_split_hyphens = function(lang)
+  local langid = languages:get_number(lang)
+  if not langid then return nil, "Cannot find language number for: "..lang end
+  luavlna.split_hyphen_langs[langid] = nil
+end
 }     
 
 % Set letters which are prevented from breaking
@@ -96,9 +102,10 @@ end
 \directlua{luavlna.debug(false)}
 }
 
-% enable split hyphens for a language
+% enable/disable split hyphens for a language
 
 \def\enablesplithyphens#1{\directlua{enable_split_hyphens("#1")}}
+\def\disablesplithyphens#1{\directlua{disable_split_hyphens("#1")}}
 
 % disable processing of units or degrees
 
