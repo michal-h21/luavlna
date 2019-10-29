@@ -11,7 +11,7 @@ luavlna.preventsingleid = math.random(2^16)
 
 local languages = langno.load_languages()
 local get_lang_id = function(lang)
-  local langid = lang 
+  local langid = tonumber(lang)
   if not tonumber(lang) then
     langid = languages:get_number(lang)
   end
@@ -57,13 +57,13 @@ set_main_language = function(lang)
 end	
 
 enable_split_hyphens = function(lang)
-  local langid = languages:get_number(lang)
+  local langid = get_lang_id(lang)
   if not langid then return nil, "Cannot find language number for: "..lang end
   luavlna.split_hyphen_langs[langid] = true
 end
 
 disable_split_hyphens = function(lang)
-  local langid = languages:get_number(lang)
+  local langid = get_lang_id(lang)
   if not langid then return nil, "Cannot find language number for: "..lang end
   luavlna.split_hyphen_langs[langid] = nil
 end
