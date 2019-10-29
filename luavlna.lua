@@ -224,6 +224,7 @@ local function prevent_single_letter (head)
   local word = ""
   local no_predegrees = M.no_predegrees
   local no_sufdegrees = M.no_sufdegrees
+  local no_initials   = M.no_initials
   local in_math = false
   while head do
     local id = head.id 
@@ -284,7 +285,7 @@ local function prevent_single_letter (head)
         space = false
         -- handle initials
         -- uppercase letter followed by period (code 46)
-      elseif init and head.id == glyph_id and head.char == period_char and nextn.id == glue_id and utf_len(word) == 1 then 
+      elseif no_initials~=true and init and head.id == glyph_id and head.char == period_char and nextn.id == glue_id and utf_len(word) == 1 then 
         head = insert_penalty(head)
       elseif head.id == glyph_id then
         local char = utf_char(head.char)
