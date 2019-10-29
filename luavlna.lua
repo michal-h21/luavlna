@@ -317,7 +317,8 @@ local break_hyphens = function(head, tail)
     local glyph_id = node.id("glyph")
     local n = head
     while n do
-       if n.id == glyph_id and hyphenate_langs[n.lang] and n.char == hyphenchar then
+       local skip = node.has_attribute(n, M.preventsingleid)
+       if skip ~= 1 and  n.id == glyph_id and hyphenate_langs[n.lang] and n.char == hyphenchar then
           -- Insert an infinite penalty before, and a zero-width glue node after, the hyphen.
           -- Like writing "\nobreak-\hspace{0pt}" or equivalently "\penalty10000-\hskip0pt"
          local p = node.new(node.id('penalty'))
