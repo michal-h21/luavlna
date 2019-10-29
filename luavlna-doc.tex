@@ -130,6 +130,19 @@ It is also possible to use the package with Lua\LaTeX, just use
 
 in the preamble.
 
+\section{Package options}
+The \verb|luavlna| package recognizes the following options
+
+\begin{description}
+  \item[\texttt{noprocess}] -- disable the automatic document processing.
+  \item[\texttt{noinitials}] -- disable processing of the initials.
+  \item[\texttt{nounits}] -- disable processing of the SI units.
+  \item[\texttt{nopredegrees}] -- disable processing of the the academic degrees before names.
+  \item[\texttt{nosufdegrees}] -- disable processing of the the academic degrees after names.
+  \item[\texttt{debug}] -- enable the debugging mode.
+  \item[\texttt{defaults}] -- load default settings. Enabled by default.
+\end{description}
+
 \section{Commands}
 
 \begin{mycode}
@@ -230,6 +243,7 @@ You can also disable initials, units and degrees processing:
   \cmd{\nopredegrees}\\
   \cmd{\nosufdegrees}
 \end{mycode}
+
 
 \subsection{Debugging commands}
 \begin{mycode}
