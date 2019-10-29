@@ -1,4 +1,6 @@
-\ProvidesPackage{luavlna}[2017/09/30 luavlna]
+\ProvidesPackage{luavlna}[2019/10/30 luavlna]
+
+\RequirePackage{kvoptions}
 
 \def\nosingledefaults{\relax}
 \input luavlna 
@@ -32,7 +34,16 @@
   \fi%
 }
 
+\DeclareVoidOption{noinitials}{\noinitials}
+\DeclareVoidOption{nounits}{\nounits}
+\DeclareVoidOption{nopredegrees}{\nopredegrees}
+\DeclareVoidOption{nosufdegrees}{\nosufdegrees}
+\DeclareVoidOption{noprocess}{\preventsingleoff}
+\DeclareVoidOption{debug}{\preventsingledebugon}
+\DeclareBoolOption[true]{defaults}
+\ProcessKeyvalOptions*
 
+\ifluavlna@defaults
 \AtBeginDocument{%
   \singlechars{czech}{AIiVvOoUuSsZzKk}
   \singlechars{slovak}{AIiVvOoUuSsZzKk}
@@ -40,4 +51,5 @@
   \enablesplithyphens{czech}
   \enablesplithyphens{slovak}
 }
+\fi
 \endinput
