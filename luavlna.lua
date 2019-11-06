@@ -306,20 +306,43 @@ local function prevent_single_letter (head)
   return  true
 end               
 
+local hyphenate_langs = {}
+local hyphenchar = string.byte("-")
+-- detect -- and ---. these should form en and em dashes and need not to be processed 
+-- by the break_hyphens 
+local is_hyphen_ligature = function(n)
+  local next_node = n.next
+  -- split_hyphens code
+  if next_node and next_node.id == glyph_id and next_node.char == hyphenchar then
+    return true
+  end
+  local prev_node = n.prev
+  if prev_node and prev_node.id == glyph_id and prev_node.char == hyphenchar then
+    return true
+  end
+  return false
+end
+
+-- detect if the current character is a hyphen
+local function is_breakable_hyphen(n)
+  return n.id == glyph_id and hyphenate_langs[n.lang] and n.char == hyphenchar 
+end
+
+
+
 -- Enable hyphenation of words that contain hyphens
 -- and repeating of the explicit hyphen on a new line when
 -- the hyphen is hyphenated
 -- It should be used in the `hyphenate` callback
 -- based on ShreewatsaR's code from:
 -- https://tex.stackexchange.com/a/417883/2891
-local hyphenate_langs = {}
 local break_hyphens = function(head, tail)
-    local hyphenchar = string.byte("-")
     local glyph_id = node.id("glyph")
     local n = head
     while n do
        local skip = node.has_attribute(n, M.preventsingleid)
-       if skip ~= 1 and  n.id == glyph_id and hyphenate_langs[n.lang] and n.char == hyphenchar then
+       -- don't break if the next or previous char is hyphen, in order to support ligaturing of dashes
+       if skip ~= 1 and is_breakable_hyphen(n) and not is_hyphen_ligature(n)  then
           -- Insert an infinite penalty before, and a zero-width glue node after, the hyphen.
           -- Like writing "\nobreak-\hspace{0pt}" or equivalently "\penalty10000-\hskip0pt"
          local p = node.new(node.id('penalty'))
