@@ -14,6 +14,7 @@ local glue_id  = node.id "glue"
 local glyph_id = node.id "glyph"
 local hlist_id = node.id "hlist"
 local vlist_id = node.id "vlist"
+local penalty_id = node.id "penalty"
 local math_id  = node.id "math"
 local period_char = string.byte(".")
 
@@ -308,8 +309,7 @@ end
 
 local hyphenate_langs = {}
 local hyphenchar = string.byte("-")
--- detect -- and ---. these should form en and em dashes and need not to be processed 
--- by the break_hyphens 
+-- don't break if the next or previous char is hyphen, in order to support ligaturing of dashes
 local is_hyphen_ligature = function(n)
   local next_node = n.next
   -- split_hyphens code
@@ -328,7 +328,14 @@ local function is_breakable_hyphen(n)
   return n.id == glyph_id and hyphenate_langs[n.lang] and n.char == hyphenchar 
 end
 
-
+-- don't process hyphens if the next node is penalty
+-- necessary to support \nobreakdash
+local function is_next_penalty(n)
+  local next_node = n.next
+  if next_node and next_node.id == penalty_id then
+    return true
+  end
+end
 
 -- Enable hyphenation of words that contain hyphens
 -- and repeating of the explicit hyphen on a new line when
@@ -341,8 +348,7 @@ local break_hyphens = function(head, tail)
     local n = head
     while n do
        local skip = node.has_attribute(n, M.preventsingleid)
-       -- don't break if the next or previous char is hyphen, in order to support ligaturing of dashes
-       if skip ~= 1 and is_breakable_hyphen(n) and not is_hyphen_ligature(n)  then
+       if skip ~= 1 and is_breakable_hyphen(n) and not is_next_penalty(n) and not is_hyphen_ligature(n)  then
           -- Insert an infinite penalty before, and a zero-width glue node after, the hyphen.
           -- Like writing "\nobreak-\hspace{0pt}" or equivalently "\penalty10000-\hskip0pt"
          local p = node.new(node.id('penalty'))
