@@ -30,6 +30,15 @@ local singlechars = {} -- {a=true,i=true,z=true, v=true, u=true, o = true}
 
 local initials = {}
 
+local getchar = function(n)
+  local real_char = n.char
+  -- test if char is valid utf8 value, return dummy value otherwise
+  if (real_char >= 57344 and real_char <= 63743) or (real_char >= 983040 and real_char <= 1048573) or real_char >= 1048576  then 
+    return "a" 
+  end
+  return utf_char(real_char)
+end
+
 local main_language = nil
 
 -- when main_language is set, we will not use lang info in the nodes, but 
@@ -267,9 +276,9 @@ local function prevent_single_letter (head)
         anchor = head
         word = ""
         init = is_initial " " -- reset initials
-      elseif space==true and id == glyph_id and is_alpha(utf_char(head.char)) then -- a letter 
+      elseif space==true and id == glyph_id and is_alpha(getchar(head)) then -- a letter 
         local lang = get_language(head.lang)
-        local char = utf_char(head.char)
+        local char = getchar(head)
         word = char
         init = is_initial(char,lang)
         local s = singlechars[lang] or {} -- load singlechars for node's lang
@@ -289,7 +298,7 @@ local function prevent_single_letter (head)
       elseif no_initials~=true and init and head.id == glyph_id and head.char == period_char and nextn.id == glue_id and utf_len(word) == 1 then 
         head = insert_penalty(head)
       elseif head.id == glyph_id then
-        local char = utf_char(head.char)
+        local char = getchar(head)
         word = word .. char
         init = is_initial(char, head.lang)
         -- hlist support
@@ -300,7 +309,7 @@ local function prevent_single_letter (head)
         prevent_single_letter(head.head)
       end              
     elseif id == glyph_id and in_math then
-      word = word .. utf_char(head.char)
+      word = word .. getchar(head)
     end
     head = head.next                                                            
   end                                                                             
