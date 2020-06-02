@@ -23,7 +23,7 @@
 
 \def\enablesplithyphens#1{%
   \ifcsname l@#1\endcsname%
-  \typeout{set lang #1, \the\csname l@#1\endcsname}
+  \typeout{set lang #1, \the\csname l@#1\endcsname}%
     \directlua{enable_split_hyphens("\the\csname l@#1\endcsname")}%
   \fi%
 }

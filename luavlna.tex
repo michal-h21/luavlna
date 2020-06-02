@@ -71,20 +71,20 @@ end
 
 % Set letters which are prevented from breaking
 \def\singlechars#1#2{%
-\directlua{set_singlechars("#1","#2")}
+\directlua{set_singlechars("#1","#2")}%
 }
 
 % Define compound initials
 \def\compoundinitials#1#2{%
-\directlua{set_compounds("#1","#2")}
+\directlua{set_compounds("#1","#2")}%
 }
 % Enable inserting of visual marks for debugging
 \def\preventsingledebugon{%
-\directlua{luavlna.debug(true)}
+\directlua{luavlna.debug(true)}%
 }
 
 \def\preventsinglelang#1{%
-	\directlua{set_main_language("#1")}
+	\directlua{set_main_language("#1")}%
 } 
 
 %\newluatexattribute\preventsinglestatus
@@ -94,12 +94,12 @@ end
 	\preventsinglestatus=2
 }
 
-\def\preventsingleoff{
+\def\preventsingleoff{%
 	\preventsinglestatus=1
 }
 % Disable inserting of visual marks for dewbugging
 \def\preventsingledebugoff{%
-\directlua{luavlna.debug(false)}
+\directlua{luavlna.debug(false)}%
 }
 
 % enable/disable split hyphens for a language
