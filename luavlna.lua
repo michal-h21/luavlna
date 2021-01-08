@@ -166,6 +166,20 @@ end
 
 local init_buffer = ""
 local is_initial = function(c, lang)
+  -- space is not initial
+  if c == " " then 
+    init_buffer = ""
+    return false
+  end
+  -- look in the initals table
+  if lang then
+    -- insert the current character to the init_buffer
+    -- and try to find the string in the initial table
+    -- for the current language
+    init_buffer = init_buffer .. c
+    local tbl = initials[lang] or {}
+    if tbl[init_buffer] then return true end
+  end
   return is_uppercase(c)
 end
 
@@ -295,7 +309,7 @@ local function prevent_single_letter (head)
         space = false
         -- handle initials
         -- uppercase letter followed by period (code 46)
-      elseif no_initials~=true and init and head.id == glyph_id and head.char == period_char and nextn.id == glue_id and utf_len(word) == 1 then 
+      elseif no_initials~=true and init and head.id == glyph_id and head.char == period_char and nextn.id == glue_id  then 
         head = insert_penalty(head)
       elseif head.id == glyph_id then
         local char = getchar(head)
