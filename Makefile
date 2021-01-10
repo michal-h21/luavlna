@@ -33,5 +33,6 @@ build: $(DOC_FILE)
 	@# copy system files to the build dir, excluding Makefile
 	@cp --parents `git ls-tree --full-tree -r --name-only HEAD | grep -v Makefile` $(BUILD_LUAVLNA)
 	@sed -e "s/{{version}}/${VERSION}/" < $(README) | sed -e "s/{{date}}/$(DATE)/" > $(BUILD_LUAVLNA)/$(README)
+	@sed -e "s/{{version}}/${VERSION}/" < luavlna.sty | sed -e "s/{{date}}/$(DATE)/" > $(BUILD_LUAVLNA)/luavlna.sty
 	@cd $(BUILD_DIR) && zip -r $(DIST_FILE) $(PACKAGE_NAME)
 
