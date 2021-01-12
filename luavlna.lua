@@ -166,6 +166,20 @@ end
 
 local init_buffer = ""
 local is_initial = function(c, lang)
+  -- space is not initial
+  if c == " " then 
+    init_buffer = ""
+    return false
+  end
+  -- look in the initals table
+  if lang then
+    -- insert the current character to the init_buffer
+    -- and try to find the string in the initial table
+    -- for the current language
+    init_buffer = init_buffer .. c
+    local tbl = initials[lang] or {}
+    if tbl[init_buffer] then return true end
+  end
   return is_uppercase(c)
 end
 
@@ -295,7 +309,7 @@ local function prevent_single_letter (head)
         space = false
         -- handle initials
         -- uppercase letter followed by period (code 46)
-      elseif no_initials~=true and init and head.id == glyph_id and head.char == period_char and nextn.id == glue_id and utf_len(word) == 1 then 
+      elseif no_initials~=true and init and head.id == glyph_id and head.char == period_char and nextn.id == glue_id  then 
         head = insert_penalty(head)
       elseif head.id == glyph_id then
         local char = getchar(head)
@@ -334,7 +348,7 @@ end
 
 -- detect if the current character is a hyphen
 local function is_breakable_hyphen(n)
-  return n.id == glyph_id and hyphenate_langs[n.lang] and n.char == hyphenchar 
+  return n.id == glyph_id and hyphenate_langs[n.lang] and n.char == hyphenchar and n.next 
 end
 
 -- don't process hyphens if the next node is penalty
@@ -345,6 +359,14 @@ local function is_next_penalty(n)
     return true
   end
 end
+
+-- split hyphens should be active only inside words, there is no need to break
+-- standalone hyphens 
+local function is_next_glyph(n)
+  local next_node = n.next
+  return next_node and next_node.id == glyph_id
+end
+
 
 -- Enable hyphenation of words that contain hyphens
 -- and repeating of the explicit hyphen on a new line when
@@ -357,7 +379,7 @@ local break_hyphens = function(head, tail)
     local n = head
     while n do
        local skip = node.has_attribute(n, M.preventsingleid)
-       if skip ~= 1 and is_breakable_hyphen(n) and not is_next_penalty(n) and not is_hyphen_ligature(n)  then
+       if skip ~= 1 and is_breakable_hyphen(n) and not is_next_penalty(n) and is_next_glyph(n) and not is_hyphen_ligature(n)  then
           -- Insert an infinite penalty before, and a zero-width glue node after, the hyphen.
           -- Like writing "\nobreak-\hspace{0pt}" or equivalently "\penalty10000-\hskip0pt"
          local p = node.new(node.id('penalty'))
