@@ -69,9 +69,20 @@ disable_split_hyphens = function(lang)
 end
 }     
 
+% the langno library supports both numeric and literal names
+% we can try to find the language ID from macros first, if it fails
+% we pass the language name to Lua. it will try to find ID in luanguage.dat and other sources
+\def\singlecharsgetlang#1{%
+  \ifcsname lang@#1\endcsname% 
+    \the\csname lang@#1\endcsname%
+  \else% unknown language macro, let langno library to find it 
+    #1%
+  \fi%
+}
+
 % Set letters which are prevented from breaking
 \def\singlechars#1#2{%
-\directlua{set_singlechars("#1","#2")}%
+  \directlua{set_singlechars("\singlecharsgetlang{#1}","#2")}%
 }
 
 % Define compound initials
@@ -84,7 +95,7 @@ end
 }
 
 \def\preventsinglelang#1{%
-	\directlua{set_main_language("#1")}%
+  \directlua{set_main_language("\singlecharsgetlang{#1}")}%
 } 
 
 %\newluatexattribute\preventsinglestatus
@@ -104,8 +115,8 @@ end
 
 % enable/disable split hyphens for a language
 
-\def\enablesplithyphens#1{\directlua{enable_split_hyphens("#1")}}
-\def\disablesplithyphens#1{\directlua{disable_split_hyphens("#1")}}
+\def\enablesplithyphens#1{\directlua{enable_split_hyphens("\singlecharsgetlang{#1}")}}
+\def\disablesplithyphens#1{\directlua{disable_split_hyphens("\singlecharsgetlang{#1}")}}
 
 % disable processing of units or degrees
 
