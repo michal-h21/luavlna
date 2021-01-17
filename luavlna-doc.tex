@@ -36,7 +36,7 @@
 \section{Introduction}
 
 
-This is a small package for plain Lua\TeX and Lua\LaTeX. In some languages, like
+This is a small package for Plain Lua\TeX and Lua\LaTeX. In some languages, like
 Czech or Polish, there should be no single letter words at the line
 end, according to the typographical norms. There exists some
 external commands (like \verb!vlna!) or packages (\verb!encxvlna!
@@ -144,6 +144,20 @@ The \verb|luavlna| package recognizes the following options
   \item[\texttt{defaults}] -- load default settings. Enabled by default.
 \end{description}
 
+
+\section{Default values}
+
+Luavlna defines default settings for Czech and Slovak. If you want to disable them,
+you can use the \texttt{defaults=false} option for Luavlna package. In Plain Lua\TeX{},
+use:
+
+\begin{mycode}
+\begin{verbatim}
+\let\nosingledefaults\relax
+\input luavlna
+\end{verbatim}
+\end{mycode}
+
 \section{Commands}
 
 \begin{mycode}
@@ -164,6 +178,7 @@ Default values:
 \singlechars{slovak}{AIiVvOoUuSsZzKk}
 \end{verbatim}
 \end{mycode}
+
 
 %By default, all
 %single letters are processed, this command can be used to pass a
