@@ -51,7 +51,7 @@ set_compounds = function(lang, compounds)
 end
 
 set_main_language = function(lang)
-  local langid = languages:get_number(lang)
+  local langid = get_lang_id(lang)
   if not langid then return nil, "Cannot find language number for: "..lang end
   luavlna.set_main_language(langid)
 end	
