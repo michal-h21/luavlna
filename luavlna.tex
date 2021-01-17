@@ -87,7 +87,7 @@ end
 
 % Define compound initials
 \def\compoundinitials#1#2{%
-\directlua{set_compounds("#1","#2")}%
+  \directlua{set_compounds("\singlecharsgetlang{#1}","#2")}%
 }
 % Enable inserting of visual marks for debugging
 \def\preventsingledebugon{%
