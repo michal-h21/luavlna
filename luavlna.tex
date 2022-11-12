@@ -22,7 +22,6 @@ end
 % By default, spaces for all single letters are inserted
 % This can be modified with \singlechars macro
 set_singlechars = function(lang,chars)
-  local utf_gmatch = unicode.utf8.gmatch
   % local langnumbers = languages.names
   local langid = get_lang_id(lang) 
   if not langid then return nil, "Cannot find language number for: "..lang end
@@ -30,8 +29,8 @@ set_singlechars = function(lang,chars)
   local singlechars = {}
   local percent = string.char(37)
   local alpha = percent .. "a"
-  for char in utf_gmatch(chars,"("..alpha..")") do
-    singlechars[char] = true
+  for pos, char in utf8.codes(chars) do
+    singlechars[utf8.char(char)] = true
   end
   luavlna.singlechars(langid,singlechars)
 end
