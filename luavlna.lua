@@ -20,12 +20,14 @@ local penalty_id = node.id "penalty"
 local math_id  = node.id "math"
 local period_char = string.byte(".")
 
--- we must process only glues with the spaceskip subtype
-local spaceskip
+-- we must process only glues with the spaceskip or xspaceskip subtypes
+local allowed_space_names = {spaceskip = true, xspaceskip = true}
+local allowed_space_types = {}
 local glue_subtypes = node.subtypes("glue")
+-- convert allowed subtypes names to numbers used in nodes
 for k,v in pairs(glue_subtypes) do
-  if v == "spaceskip" then
-    spaceskip = k
+  if allowed_space_names[v] then
+    allowed_space_types[k] = true
   end
 end
 
@@ -293,7 +295,7 @@ local function prevent_single_letter (head)
       end
     end
     if skip ~= 1 and not in_math  then 
-      if id == glue_id and head.subtype == spaceskip then
+      if id == glue_id and allowed_space_types[head.subtype]  then
         if wasnumber then
           if word ~= "" then
             wasnumber = false
