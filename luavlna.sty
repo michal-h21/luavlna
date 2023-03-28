@@ -1,5 +1,10 @@
 \ProvidesPackage{luavlna}[{{date}} luavlna]
 
+\ifdefined\directlua\else
+\PackageWarning{luavlna}{Luavlna needs LuaLaTeX, aborting}
+\endinput
+\fi
+
 \RequirePackage{kvoptions}
 
 \def\nosingledefaults{\relax}
