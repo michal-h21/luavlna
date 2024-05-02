@@ -58,7 +58,8 @@ local load_lang_dat = function(start)
 end
 
 local load_lang_dat_lualatex = function()
-  return load_lang_dat(1)
+  -- it used to be 1, but it seems that in newer LuaLaTeX versions, we should start at 0
+  return load_lang_dat(0)
 end
 
 local load_csplain= function()
