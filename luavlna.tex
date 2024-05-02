@@ -72,10 +72,15 @@ end
 % we can try to find the language ID from macros first, if it fails
 % we pass the language name to Lua. it will try to find ID in luanguage.dat and other sources
 \def\singlecharsgetlang#1{%
-  \ifcsname lang@#1\endcsname% 
-    \the\csname lang@#1\endcsname%
-  \else% unknown language macro, let langno library to find it 
-    #1%
+  \ifcsname l@#1\endcsname% 
+    \the\csname l@#1\endcsname%
+  \else%
+    \ifcsname lang@#1\endcsname% 
+      \the\csname lang@#1\endcsname%
+    \else%
+      % unknown language macro, let langno library to find it 
+      #1%
+    \fi%
   \fi%
 }
 
