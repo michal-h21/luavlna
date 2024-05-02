@@ -298,7 +298,9 @@ File \verb|language.dat| is processed to load language names, aliases and assign
     local luatex = langno.load_languages(fmt)
     local t = {}
     for k, v in pairs(luatex.names) do
-      t[#t+1]=k
+      if k and k~="" then
+        t[#t+1]=k
+      end
     end
     table.sort(t)
     tex.print(table.concat(t,", "))
