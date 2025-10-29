@@ -395,6 +395,8 @@ local function prevent_single_letter (head)
         -- vlist support
       elseif head.id == vlist_id then
         prevent_single_letter(head.head)
+      elseif head.id == penalty_id then
+        word = ""
       end
     elseif id == glyph_id and in_math then
       word = word .. getchar(head)
